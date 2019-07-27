@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "225472482950",
+    "firebase_url": "https://vision-check-c7665.firebaseio.com",
+    "project_id": "vision-check-c7665",
+    "storage_bucket": "vision-check-c7665.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225472482950:android:f62f0718411db225",
+        "android_client_info": {
+          "package_name": "com.studyinghub.vision_check_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225472482950-jie4r95sa0lder4ku7b0h3njk8itjfum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBca7YETVRVoGjIwqwbCyeticz3TmytQ0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225472482950-jie4r95sa0lder4ku7b0h3njk8itjfum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

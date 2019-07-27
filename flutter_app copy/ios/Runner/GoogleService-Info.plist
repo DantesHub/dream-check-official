@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>225472482950-ftvt7gu03lsib6u3qau872cgon5sr8e1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.225472482950-ftvt7gu03lsib6u3qau872cgon5sr8e1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBnwV6zAMVEYBbMq44S39amkbtZ9qrSZcU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>225472482950</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.studyinghub.visionCheckTest</string>
+	<key>PROJECT_ID</key>
+	<string>vision-check-c7665</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vision-check-c7665.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:225472482950:ios:49dbbd55f149d8b8</string>
+	<key>DATABASE_URL</key>
+	<string>https://vision-check-c7665.firebaseio.com</string>
+</dict>
+</plist>
