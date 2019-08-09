@@ -5,17 +5,18 @@ import "components/Constants.dart";
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'DreamTitleMakerPage.dart';
-import 'step_builder.dart';
+import 'login/register_page.dart';
 import 'components/step_card.dart';
 import 'restart_widget.dart';
 import 'dart:async';
-import 'target_page.dart';
-import 'components/MyGlobals.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'components/local_notification_helper.dart';
 import 'package:vision_check_test/StepMakerPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login/whatshouldhappen.dart';
+import 'step_builder.dart';
+import 'completed_dreams.dart';
+import 'components/completed_dream.dart';
 
 String fsTitleDelete;
 int counter = 1;
@@ -27,8 +28,10 @@ bool calledAlready = false;
 bool isFinished = false;
 bool alreadyCalled = false;
 int length;
+int highestUniqueNumber = 0;
 bool removedDream = false;
 bool initStateCalled = false;
+bool wantsPopUpTest = false;
 
 List<String> dreamTitles = new List<String>();
 List<IconData> icons = new List<IconData>();
@@ -58,19 +61,29 @@ class _HomePageState extends State<HomePage> {
       if (user != null) {
         loggedInUser = user;
         loggedInUserString = loggedInUser.email;
+        await _firestore
+            .collection('users')
+            .document(loggedInUser.email)
+            .updateData({
+          'user': loggedInUser.email,
+        });
+        _ensureLoggedIn();
+      } else {
+        print("user is null");
       }
     } catch (e) {
-      print("************\n***********" + e);
+      print(e);
     }
   }
 
   @override
   void initState() {
     super.initState();
-    print("called " + initStateCalled.toString());
     if (!initStateCalled) {
       calledAlready = false;
-      getData();
+      if (registerWasPressed == false) {
+        getData();
+      }
     }
     initStateCalled = true;
     onHomePage = true;
@@ -90,26 +103,79 @@ class _HomePageState extends State<HomePage> {
     return NotificationDetails(androidChannelSpecifics, iOSChannelSpecifics);
   }
 
+  Future<Null> _ensureLoggedIn() async {
+    SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
+
+    //sign in the user here and if it is successful then do following
+
+    prefs.setString("username", loggedInUser.email);
+    this.setState(() {
+      /*
+     updating the value of loggedIn to true so it will
+     automatically trigger the screen to display homeScaffold.
+  */
+      loggedIn = true;
+    });
+  }
+
   Future<void> getData() async {
+    print("were over here");
     await getCurrentUser();
     if (calledAlready == false) {
       List<StepCard> sCards;
+      try {
+        print("getting from firestore");
+        await _firestore
+            .collection('users')
+            .document(loggedInUser.email)
+            .get()
+            .then((DocumentSnapshot) =>
+                wantsPopUpTest = DocumentSnapshot.data['wantsPopUp']);
+      } catch (e) {
+        print(e);
+        return;
+      }
+      if (wantsPopUpTest != null) {
+        wantsPopUp = wantsPopUpTest;
+        print('wantsPopUPPPP $wantsPopUp');
+      } else {
+        print("gang over here");
+        wantsPopUpTest = true;
+      }
 
+      final completedDreams = await _firestore
+          .collection('users')
+          .document(loggedInUserString)
+          .collection('completedDreams')
+          .getDocuments();
+      for (var cd in completedDreams.documents) {
+        final dateCompleted = cd.data['dateCompleted'];
+        final icon = cd.data['icon'];
+        final title = cd.data['title'];
+
+        completedDreamsList.add(
+          new CompletedDream(
+            dreamText: title,
+            iconData: icon,
+            dateCompleted: dateCompleted,
+          ),
+        );
+      }
       final dreams = await _firestore
           .collection('users')
           .document(loggedInUserString)
           .collection('dreams')
           .getDocuments();
       length = dreams.documents.length.toInt();
-      print("documents:::::::" + dreams.documents.toString());
       for (var d in dreams.documents) {
         final dreamTitle = d.data['title'];
         final iconTitle = d.data['icon'];
         icons.add(iconMap[iconTitle]);
 
         final position = d.data['position'];
-        positions.add(int.parse(position));
 
+        positions.add(int.parse(position));
         final fireSteps = await _firestore
             .collection('users')
             .document(loggedInUserString)
@@ -119,7 +185,6 @@ class _HomePageState extends State<HomePage> {
             .getDocuments();
 
         sCards = new List<StepCard>();
-        print("made it here");
 
         for (var step in fireSteps.documents) {
           final stepTitle = step.data['stepName'];
@@ -131,6 +196,13 @@ class _HomePageState extends State<HomePage> {
           final cardDateVariable = step.data['cardDateVariable'];
           final uniqueNumberr = step.data['uniqueNumber'];
           final stepIndex = step.data['stepIndex'];
+
+          if (uniqueNumberr != null) {
+            if (uniqueNumberr >= highestUniqueNumber) {
+              highestUniqueNumber = uniqueNumberr;
+              print(highestUniqueNumber);
+            }
+          }
 
           sCards.add(
             new StepCard(
@@ -181,7 +253,8 @@ class _HomePageState extends State<HomePage> {
                 int.parse((notificationFormatTime.substring(0, 2))),
                 int.parse((notificationFormatTime.substring(3, 5))),
                 0);
-            DateTime dt = DateTime.parse(notificationFormatDay);
+            print("not date $cardReminderDate");
+            DateTime dt = DateTime.parse(cardReminderDate);
             String dayOfTheWeekk = new DateFormat("EEEE").format(dt);
             //convert day of week to int
             if (dayOfTheWeekk == "Monday") {
@@ -237,7 +310,7 @@ class _HomePageState extends State<HomePage> {
             );
           }
         }
-        print("added");
+
         dreamCards.add(
           new DreamCard(
             icon: iconMap[iconTitle],
@@ -251,6 +324,12 @@ class _HomePageState extends State<HomePage> {
       }
 
       setState(() {
+        uniqueNumber = highestUniqueNumber;
+        if (uniqueNumber == null) {
+          uniqueNumber = 0;
+        } else {
+          uniqueNumber++;
+        }
         calledAlready = true;
         isFinished = true;
         dreamCards = dreamCards;
@@ -272,7 +351,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext mainContext) {
-    print("we building");
     if (dreamCards.length == 0) {
       dreamCards.add(
         new GestureDetector(
@@ -339,7 +417,7 @@ class _HomePageState extends State<HomePage> {
           title: Text(
             'My Visions',
             style: TextStyle(
-              color: Color(0xFF39414C),
+              color: titleColor,
               fontSize: 28.0,
               fontWeight: FontWeight.bold,
             ),

@@ -10,6 +10,8 @@ import 'package:vision_check_test/home_page.dart';
 import 'package:vision_check_test/target_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'welcome_page.dart';
+import 'package:vision_check_test/components/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
@@ -26,6 +28,22 @@ class _LoginPageState extends State<LoginPage> {
   String recoverEmail;
   String password;
   bool sent = false;
+
+  Future<Null> _ensureLoggedIn() async {
+    SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
+
+    //sign in the user here and if it is successful then do following
+
+    prefs.setString("username", email);
+    this.setState(() {
+      /*
+     updating the value of loggedIn to true so it will
+     automatically trigger the screen to display homeScaffold.
+  */
+      loggedIn = true;
+    });
+  }
 
   Future<void> resetPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
@@ -55,10 +73,8 @@ class _LoginPageState extends State<LoginPage> {
       body: ModalProgressHUD(
         inAsyncCall: loading,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 100.0),
+          child: ListView(
             children: <Widget>[
               Container(
                 height: 200.0,
@@ -104,7 +120,6 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       _firestore.collection('users').document(email).setData({
                         'user': email,
-                        'loggedIn': true,
                       });
                       return showDialog(
                         context: context,
@@ -214,9 +229,10 @@ class _LoginPageState extends State<LoginPage> {
                     loading = true;
                   });
                   try {
-                    final user = await _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
+                    final user = await Auth()
+                        .signInWithEmailAndPassword(email, password);
                     if (user != null) {
+                      _ensureLoggedIn();
                       Navigator.push(
                           context,
                           MaterialPageRoute(

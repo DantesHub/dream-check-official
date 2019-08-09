@@ -14,7 +14,7 @@ String loggedInUserTargetPage;
 bool targetInitCalled = false;
 List<TargetCard> firstStepList = new List<TargetCard>();
 HomePage h = new HomePage();
-bool targetPageCalled = false;
+bool onTargetPage = false;
 
 class TargetPage extends StatefulWidget {
   @override
@@ -46,26 +46,28 @@ class _TargetPageState extends State<TargetPage> {
     checkDifference();
     super.initState();
     getCurrentUser();
-    targetPageCalled = true;
+    onTargetPage = true;
   }
 
   void checkDifference() {
     firstStepList.clear();
+    TargetCard tc;
     for (int i = 1; i < dreamCards.length; i++) {
       DreamCard d = dreamCards[i];
       StepCard s;
       if (d.stepList.length > 0) {
         s = d.stepList.elementAt(0);
+        tc = new TargetCard(
+            dreamTitle: d.dreamTitle,
+            stepNumber: s.stepNumber,
+            stepName: s.stepName,
+            cardReminderDate: s.cardReminderDate,
+            cardReminderTime: s.cardReminderTime,
+            cardWantsRemind: s.cardWantsRemind,
+            cardDateVariable: s.cardDateVariable,
+            icon: d.icon,
+            stepsList: d.stepList);
       }
-      TargetCard tc = new TargetCard(
-          stepNumber: s.stepNumber,
-          stepName: s.stepName,
-          cardReminderDate: s.cardReminderDate,
-          cardReminderTime: s.cardReminderTime,
-          cardWantsRemind: s.cardWantsRemind,
-          cardDateVariable: s.cardDateVariable,
-          icon: d.icon,
-          stepsList: d.stepList);
       if (d.stepList.length > 0 && !firstStepList.contains(tc)) {
         firstStepList.add(tc);
       }
@@ -78,7 +80,7 @@ class _TargetPageState extends State<TargetPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 20.0,
-        backgroundColor: Colors.white70,
+        backgroundColor: Colors.white,
         title: Text(
           'Target Steps',
           style: TextStyle(
@@ -95,7 +97,7 @@ class _TargetPageState extends State<TargetPage> {
               size: 30,
             ),
             onPressed: () {
-              targetPageCalled = false;
+              onTargetPage = false;
               onHomePage = true;
               Navigator.pop(context);
             },
@@ -103,19 +105,27 @@ class _TargetPageState extends State<TargetPage> {
         ],
       ),
       backgroundColor: Color(0xFFFFFFFF),
-      body: ListView.builder(
-        // Must have an item count equal to the number of items!
-        itemCount: firstStepList.length,
-        controller: _scrollController,
+      body: Center(
+        child: (firstStepList.length == 0)
+            ? Text(
+                "You have no steps \nto be completed",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey[700], fontSize: 20.0),
+              )
+            : ListView.builder(
+                // Must have an item count equal to the number of items!
+                itemCount: firstStepList.length,
+                controller: _scrollController,
 
-        // A callback that will return a widget.
-        itemBuilder: (context, index) {
-          // In our case, a stepCard for each step
-          return Dismissible(
-            key: new Key(UniqueKey().toString()),
-            child: firstStepList[index],
-          );
-        },
+                // A callback that will return a widget.
+                itemBuilder: (context, index) {
+                  // In our case, a stepCard for each step
+                  return Dismissible(
+                    key: new Key(UniqueKey().toString()),
+                    child: firstStepList[index],
+                  );
+                },
+              ),
       ),
       bottomNavigationBar: BottomHomeBar(),
     );

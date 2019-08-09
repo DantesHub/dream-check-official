@@ -61,7 +61,6 @@ class _StepCardState extends State<StepCard> {
   final flutterLocalNotificationPlugin = FlutterLocalNotificationsPlugin();
 
   void showAlert(BuildContext context) {
-    print("teq");
     Navigator.push(
       context,
       PageTransition(
@@ -78,115 +77,121 @@ class _StepCardState extends State<StepCard> {
   Widget build(BuildContext context) {
     //Constant for wrapping text
     double c_width = MediaQuery.of(context).size.width * 0.70;
-    return GestureDetector(
-      onTap: () {
-        userSelection = widget.repeatType;
-        stepNumberPressed = widget.stepIndex;
-        print(stepNumberPressed);
-        editStepWasPressed = true;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => new StepMaker(
-                  widget.cardReminderTime,
-                  widget.stepName,
-                  widget.cardDateVariable,
-                  widget.cardWantsRemind,
-                  widget.cardReminderDate,
-                  widget.repeatType,
-                ),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.all(5.0),
-        height: 124.0,
-        child: Card(
-          elevation: 3.0,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: <Widget>[
-                Text(widget.stepNumber.toString(),
-                    style: (widget.stepNumber > 9)
-                        ? TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)
-                        : TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold)),
-
-                RotatedBox(
-                  quarterTurns: 1,
-                  child: Divider(
-                    color: Colors.black,
+    return SafeArea(
+      child: Row(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              userSelection = widget.repeatType;
+              stepNumberPressed = widget.stepIndex;
+              print(stepNumberPressed);
+              editStepWasPressed = true;
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => new StepMaker(
+                    widget.cardReminderTime,
+                    widget.stepName,
+                    widget.cardDateVariable,
+                    widget.cardWantsRemind,
+                    widget.cardReminderDate,
+                    widget.repeatType,
                   ),
                 ),
-
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 10.0, 4.0, 10.0),
-                      child: Text(
-                        "Finish By: " + widget.cardDateVariable,
-                        style: TextStyle(
-                          fontSize: 15.0,
+              );
+            },
+            child: Container(
+              margin: EdgeInsets.all(5.0),
+              height: 124.0,
+              child: Card(
+                elevation: 3.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(widget.stepNumber.toString(),
+                          style: (widget.stepNumber > 9)
+                              ? TextStyle(
+                                  fontSize: 16.0, fontWeight: FontWeight.bold)
+                              : TextStyle(
+                                  fontSize: 18.0, fontWeight: FontWeight.bold)),
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Divider(
                           color: Colors.black,
                         ),
                       ),
-                    ),
-                    Flexible(
-                      child: Container(
-                        width: c_width,
-                        child: Text(
-                          widget.stepName,
-                          style: TextStyle(
-                            fontSize: 17.0,
-                          ),
-                          overflow: TextOverflow.fade,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    MaterialButton(
-                      elevation: 8.0,
-                      height: 30.0,
-                      minWidth: 10.0,
-                      color: mainAccentColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        setState(() {
-                          Future.delayed(
-                              Duration.zero, () => showAlert(context));
-                          stepNumberPressed = widget.stepIndex;
-                          print("green $stepNumberPressed");
-                        });
-                      },
-                      splashColor: Colors.greenAccent,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 6.0, top: 6.0),
-                        child: (widget.stepNumber > 9)
-                            ? Icon(Icons.check, size: 20.0)
-                            : Icon(
-                                Icons.check,
-                                size: 26.0,
+                      Column(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 10.0, 4.0, 10.0),
+                            child: Text(
+                              "Finish By: " + widget.cardDateVariable,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black,
                               ),
+                            ),
+                          ),
+                          Container(
+                            width: (MediaQuery.of(context).size.width > 400)
+                                ? c_width
+                                : 250.0,
+                            child: Text(
+                              widget.stepName,
+                              style: TextStyle(
+                                fontSize: 17.0,
+                              ),
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SafeArea(
+                            child: MaterialButton(
+                              elevation: 8.0,
+                              height: 30.0,
+                              minWidth: 10.0,
+                              color: Colors.grey[100],
+                              textColor: Colors.white,
+                              onPressed: () {
+                                setState(() {
+                                  Future.delayed(
+                                      Duration.zero, () => showAlert(context));
+                                  stepNumberPressed = widget.stepIndex;
+                                });
+                              },
+                              splashColor: Colors.greenAccent,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 6.0, top: 6.0),
+                                child: (widget.stepNumber > 9)
+                                    ? Icon(
+                                        Icons.check,
+                                        size: 20.0,
+                                        color: mainAccentColor,
+                                      )
+                                    : Icon(
+                                        Icons.check,
+                                        size: 26.0,
+                                        color: mainAccentColor,
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-
-                Column(
-                  children: <Widget>[],
-                ),
-//              Container(
-//                  width: c_width,
-//                  child: ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

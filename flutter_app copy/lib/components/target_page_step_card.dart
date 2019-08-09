@@ -13,6 +13,7 @@ import 'package:vision_check_test/home_page.dart';
 
 class TargetCard extends StatefulWidget {
   TargetCard({
+    @required this.dreamTitle,
     @required this.stepNumber,
     @required this.stepName,
     @required this.cardReminderDate,
@@ -24,6 +25,7 @@ class TargetCard extends StatefulWidget {
   });
 
   //6 variables
+  String dreamTitle;
   int stepNumber;
   String stepName;
   String cardReminderTime;
@@ -75,7 +77,7 @@ class _TargetCardState extends State<TargetCard> {
                       "Finish By: " + widget.cardDateVariable,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
+                        fontSize: 15.0,
                         color: Colors.red,
                       ),
                     ),
@@ -84,7 +86,9 @@ class _TargetCardState extends State<TargetCard> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Container(
-                        width: c_width,
+                        width: (MediaQuery.of(context).size.width > 400)
+                            ? c_width
+                            : 250.0,
                         child: Text(
                           widget.stepName,
                           style: TextStyle(
@@ -104,17 +108,18 @@ class _TargetCardState extends State<TargetCard> {
                     elevation: 8.0,
                     height: 30.0,
                     minWidth: 10.0,
-                    color: mainAccentColor,
+                    color: Colors.grey[100],
                     textColor: Colors.white,
                     onPressed: () {
                       setState(() {
                         onSettingsPage = false;
                         onHomePage = false;
-                        targetPageCalled = false;
+                        onTargetPage = false;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Steps(
+                                    title: widget.dreamTitle,
                                     icon: widget.icon,
                                     stepsList: widget.stepsList)));
                       });
@@ -123,10 +128,15 @@ class _TargetCardState extends State<TargetCard> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 6.0, top: 6.0),
                       child: (widget.stepNumber > 9)
-                          ? Icon(Icons.more_horiz, size: 20.0)
+                          ? Icon(
+                              Icons.more_horiz,
+                              size: 20.0,
+                              color: mainAccentColor,
+                            )
                           : Icon(
                               Icons.more_horiz,
                               size: 26.0,
+                              color: mainAccentColor,
                             ),
                     ),
                   ),

@@ -6,6 +6,11 @@ import 'constants.dart';
 import 'package:vision_check_test/home_page.dart';
 import 'package:vision_check_test/components/Constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vision_check_test/components/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'whatshouldhappen.dart';
+
+bool registerWasPressed = false;
 
 class RegisterPage extends StatefulWidget {
   static const String id = 'registration_page';
@@ -34,6 +39,22 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  Future<Null> _ensureLoggedIn() async {
+    SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
+
+    //sign in the user here and if it is successful then do following
+
+    prefs.setString("username", email);
+    this.setState(() {
+      /*
+     updating the value of loggedIn to true so it will
+     automatically trigger the screen to display homeScaffold.
+  */
+      loggedIn = true;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -52,19 +73,19 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-//              Container(
-//                height: 200.0,
-//                child: Center(
-//                  child: Hero(
-//                    tag: "logo",
-//                    child: Icon(
-//                      Icons.check,
-//                      size: 174.0,
-//                      color: mainAccentColor,
-//                    ),
-//                  ),
-//                ),
-//              ),
+              Container(
+                height: 200.0,
+                child: Center(
+                  child: Hero(
+                    tag: "logo",
+                    child: Icon(
+                      Icons.check,
+                      size: 174.0,
+                      color: mainAccentColor,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 18.0,
               ),
@@ -108,9 +129,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               OvalButtonForLogIn(
                 onPressed: () async {
-                  await _firestore.collection('users').document(email).setData({
-                    'user': email,
-                  });
                   setState(() {
                     loading = true;
                   });
@@ -118,6 +136,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
+                      await _firestore
+                          .collection('users')
+                          .document(email)
+                          .setData({'wantsPopUp': true});
+                      registerWasPressed = true;
+                      isFinished = true;
+                      _ensureLoggedIn();
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
                     }
@@ -175,7 +200,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       );
                     } else {
-                      print(e);
                       loading = false;
                       return showDialog(
                         context: context,
@@ -183,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return AlertDialog(
                             title: Text("Try again"),
                             content: Text(
-                              "invalid email address",
+                              e.toString(),
                             ),
                             actions: <Widget>[
                               Center(

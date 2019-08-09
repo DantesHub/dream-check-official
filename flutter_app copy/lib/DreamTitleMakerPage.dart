@@ -38,7 +38,7 @@ class _TitleMakerPage extends State<TitleMakerPage> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
-              color: Color(0xFF15C96C),
+              color: titleColor,
             ),
           ),
           actions: <Widget>[

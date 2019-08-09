@@ -13,7 +13,7 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => HomePage());
+        return MaterialPageRoute(builder: (context) => WhatHappened());
       case 'home':
         return MaterialPageRoute(builder: (context) => HomePage());
       default:

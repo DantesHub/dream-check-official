@@ -277,29 +277,32 @@ class _StepMakerState extends State<StepMaker> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
-          padding: const EdgeInsets.only(left: 80.0),
-          child: Row(
-            children: <Widget>[
-              Text(
-                "Step builder",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: Color(0xFF15C96C),
+          padding: const EdgeInsets.only(left: 50.0),
+          child: SafeArea(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Step builder",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Color(0xFF15C96C),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Icon(
-                  usersIconData,
-                  color: Colors.black,
-                  size: 30,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Icon(
+                    usersIconData,
+                    color: Colors.black,
+                    size: 30,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 
@@ -330,7 +333,7 @@ class _StepMakerState extends State<StepMaker> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 23.0, top: 50.0, bottom: 20.0),
+                            left: 15.0, top: 30.0, bottom: 20.0),
                         child: Text(
                           "What will you be doing for this step?",
                           textAlign: TextAlign.center,
@@ -374,7 +377,7 @@ class _StepMakerState extends State<StepMaker> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, top: 40.0, bottom: 20.0),
+                            left: 10.0, top: 5.0, bottom: 20.0),
                         child: Text(
                           "What is your target date for this step?",
                           textAlign: TextAlign.center,
@@ -449,7 +452,7 @@ class _StepMakerState extends State<StepMaker> {
 
                     //This is the 3rd row
                     Container(
-                      margin: EdgeInsets.only(bottom: 40.0),
+                      margin: EdgeInsets.only(bottom: 0.0),
                       child: Row(
                         children: <Widget>[
                           Padding(
@@ -509,7 +512,8 @@ class _StepMakerState extends State<StepMaker> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.all(10.0),
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0, right: 10.0),
                                             child: MaterialButton(
                                               elevation: 8.0,
                                               height: 40.0,
@@ -809,7 +813,6 @@ class _StepMakerState extends State<StepMaker> {
                                     if (userSelection != "Every Week") {
                                       steps.add(
                                         new StepCard(
-                                          key: new Key(UniqueKey().toString()),
                                           stepNumber:
                                               (lastStepCardInList.stepNumber +
                                                   1),
@@ -829,7 +832,6 @@ class _StepMakerState extends State<StepMaker> {
                                       // steps.length != 0
                                       steps.add(
                                         new StepCard(
-                                          key: new Key(UniqueKey().toString()),
                                           stepNumber:
                                               (lastStepCardInList.stepNumber +
                                                   1),
@@ -849,7 +851,6 @@ class _StepMakerState extends State<StepMaker> {
                                     //steps.length == 0 and editStepWasPressed == false
                                     steps.add(
                                       new StepCard(
-                                        key: new Key(UniqueKey().toString()),
                                         stepNumber: (steps.length + 1),
                                         stepName: widget.stepName,
                                         cardReminderDate: notificationFormatDay,
@@ -872,7 +873,6 @@ class _StepMakerState extends State<StepMaker> {
                                       steps.insert(
                                         stepNumberPressed,
                                         new StepCard(
-                                          key: new Key(UniqueKey().toString()),
                                           stepNumber: oldStep.stepNumber,
                                           stepName: widget.stepName,
                                           cardReminderDate:
@@ -890,8 +890,6 @@ class _StepMakerState extends State<StepMaker> {
                                       steps.insert(
                                         stepNumberPressed,
                                         new StepCard(
-                                            key:
-                                                new Key(UniqueKey().toString()),
                                             stepNumber: oldStep.stepNumber,
                                             stepName: widget.stepName,
                                             cardReminderDate:
@@ -916,6 +914,7 @@ class _StepMakerState extends State<StepMaker> {
 
                                 if (didTheyToggleToFalse == true &&
                                     editStepWasPressed == true) {
+                                  print("CANCELED");
                                   StepCard s = steps[stepNumberPressed];
                                   int cancelNumber = s.uniqueNumber;
                                   flutterLocalNotificationPlugin
@@ -923,10 +922,13 @@ class _StepMakerState extends State<StepMaker> {
                                 }
 
                                 if (widget.wantsRemind == true &&
-                                    editStepWasPressed == false) {
+                                    editStepWasPressed == false &&
+                                    (widget.reminderTime != "Time" &&
+                                        widget.reminderDate != "Day")) {
                                   StepCard s = steps[steps.length - 1];
                                   if (userSelection == justOnce ||
                                       userSelection == "Repeat") {
+                                    print("SCHEDULED");
                                     flutterLocalNotificationPlugin.schedule(
                                       s.uniqueNumber,
                                       "Dream Check!",
@@ -1032,9 +1034,7 @@ class _StepMakerState extends State<StepMaker> {
                                     StepCard s = steps[stepNumberPressed];
                                     if (userSelection == justOnce ||
                                         userSelection == "Repeat") {
-                                      print(notificationFormatDay +
-                                          " " +
-                                          notificationFormatTime);
+                                      print("SCHEDULED");
                                       flutterLocalNotificationPlugin.schedule(
                                           s.uniqueNumber,
                                           "Dream Check!",
@@ -1051,6 +1051,7 @@ class _StepMakerState extends State<StepMaker> {
                                           int.parse((notificationFormatTime
                                               .substring(3, 5))),
                                           0);
+                                      print("SCHEDULED");
                                       flutterLocalNotificationPlugin
                                           .showDailyAtTime(
                                         s.uniqueNumber,
@@ -1118,6 +1119,7 @@ class _StepMakerState extends State<StepMaker> {
                                           'stepIndex': s.stepIndex,
                                         });
                                       }
+                                      print("SCHEDULED twice");
                                       flutterLocalNotificationPlugin
                                           .showWeeklyAtDayAndTime(
                                         s.uniqueNumber,

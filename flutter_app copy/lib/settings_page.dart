@@ -7,10 +7,14 @@ import 'home_page.dart';
 import 'target_page.dart';
 import 'restart_widget.dart';
 import 'components/BottomHomeBar.dart';
+import 'login/register_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:vision_check_test/StepMakerPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'login/login_page.dart';
+import 'components/dream_card.dart';
+import 'completed_dreams.dart';
+import 'step_builder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 bool onSettingsPage = false;
 
@@ -27,15 +31,27 @@ class _SettingsState extends State<Settings> {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 
+  Future<Null> logoutUser() async {
+    print("WERE LOGGING OUT");
+    //logout user
+    SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
+    await _logOut();
+    prefs.clear();
+    this.setState(() {
+      /*
+     updating the value of loggedIn to false so it will
+     automatically trigger the screen to display loginScaffold.
+  */
+      loggedIn = false;
+    });
+  }
+
   _logOut() async {
-    print("DELETED");
-    await Firestore.instance
-        .collection('users')
-        .document(loggedInUser.email)
-        .delete();
+    print("SIGNED OUT");
     await _auth.signOut().then((_) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) => WelcomePage()));
     });
   }
 
@@ -81,11 +97,11 @@ class _SettingsState extends State<Settings> {
               size: 30,
             ),
             onPressed: () {
-              if (targetPageCalled == true) {
+              if (onTargetPage == true) {
                 onHomePage = false;
-                targetPageCalled = true;
+                onTargetPage = true;
               } else if (onHomePage == true) {
-                targetPageCalled = false;
+                onTargetPage = false;
                 onHomePage = true;
               }
               onSettingsPage = false;
@@ -95,16 +111,50 @@ class _SettingsState extends State<Settings> {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(
             "Hold down dream to delete",
             style: TextStyle(color: Colors.grey, fontSize: 20.0),
           ),
+          Divider(),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                "\t  Toggle off to stop Tip pop up",
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Switch(
+                  activeColor: mainAccentColor,
+                  activeTrackColor: Colors.greenAccent,
+                  value: wantsPopUp,
+                  onChanged: (value) {
+                    setState(() {
+                      wantsPopUp = value;
+                      Firestore.instance
+                          .collection('users')
+                          .document(loggedInUser.email)
+                          .setData({
+                        'user': loggedInUser.email,
+                        "wantsPopUp": wantsPopUp,
+                      });
+                    });
+                  }),
+            ],
+          ),
+          Divider(),
           Center(
             child: OvalButtonForLogIn(
               onPressed: () {
-                _logOut();
+                for (int i = 1; i < dreamCards.length; i++) {
+                  DreamCard dCard = dreamCards[i];
+                  dCard.stepList.clear();
+                }
+                completedDreamsList.clear();
+                registerWasPressed = false;
+                logoutUser();
                 editStepWasPressed = false;
                 onSettingsPage = false;
                 counter = 1;

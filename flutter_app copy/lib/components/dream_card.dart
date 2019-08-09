@@ -34,7 +34,12 @@ class _DreamCardState extends State<DreamCard> {
     Navigator.push(
       context,
       PageTransition(
-          child: AreYouSurePage(), type: PageTransitionType.downToUp),
+          child: AreYouSurePage(
+            iconData: widget.icon,
+            dreamTitle: widget.dreamTitle,
+            position: widget.position,
+          ),
+          type: PageTransitionType.downToUp),
     );
   }
 
@@ -61,9 +66,10 @@ class _DreamCardState extends State<DreamCard> {
           context,
           MaterialPageRoute(
             builder: (context) => Steps(
-                  icon: widget.icon,
-                  stepsList: widget.stepList,
-                ),
+              icon: widget.icon,
+              stepsList: widget.stepList,
+              title: widget.dreamTitle,
+            ),
           ),
         );
       },
@@ -94,7 +100,7 @@ class _DreamCardState extends State<DreamCard> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
+                    fontSize: 16.0,
                   ),
                   overflow: TextOverflow.fade,
                 ),
@@ -104,7 +110,7 @@ class _DreamCardState extends State<DreamCard> {
               padding: const EdgeInsets.only(top: 20.0),
               child: Icon(
                 widget.icon,
-                size: 70.0,
+                size: 50.0,
                 color: mainAccentColor,
               ),
             ),

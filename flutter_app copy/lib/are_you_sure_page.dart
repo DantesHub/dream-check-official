@@ -6,11 +6,18 @@ import 'components/step_card.dart';
 import 'home_page.dart';
 import 'components/dream_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'components/Constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 int dreamPosition;
 
 class AreYouSurePage extends StatefulWidget {
+  AreYouSurePage(
+      {@required iconData, @required dreamTitle, @required position});
+  IconData iconData;
+  String dreamTitle;
+  int position;
+
   @override
   createState() => _AreYouSureState();
 }
@@ -65,35 +72,48 @@ class _AreYouSureState extends State<AreYouSurePage> {
                     ),
                     onPressed: () {
                       setState(() {
-                        Firestore.instance
-                            .collection('users')
-                            .document(loggedInUser.email)
-                            .collection("dreams")
-                            .document(fsTitleDelete.toString())
-                            .collection("stepListForDream")
-                            .getDocuments()
-                            .then((snapshot) {
-                          for (DocumentSnapshot ds in snapshot.documents) {
-                            ds.reference.delete();
-                          }
-                        });
-                        Firestore.instance
-                            .collection('users')
-                            .document(loggedInUser.email)
-                            .collection("dreams")
-                            .document(fsTitleDelete.toString())
-                            .delete()
-                            .catchError((e) {
-                          print(e);
-                        });
-                        removedDream = true;
-                        print(positionOfDreamPressed);
+                        for (int i = 1; i < dreamCards.length; i++) {
+                          Firestore.instance
+                              .collection('users')
+                              .document(loggedInUser.email)
+                              .collection("dreams")
+                              .document("dream" + i.toString())
+                              .collection("stepListForDream")
+                              .getDocuments()
+                              .then((snapshot) {
+                            for (DocumentSnapshot ds in snapshot.documents) {
+                              ds.reference.delete();
+                            }
+                          });
+                        }
                         dreamCards.removeAt(positionOfDreamPressed);
                         counter--;
                         for (int i = 1; i < dreamCards.length; i++) {
                           DreamCard d = dreamCards[i];
                           d.position = i;
                         }
+                        for (int i = 1; i < dreamCards.length; i++) {
+                          print("wathappned");
+                          DreamCard dCard = dreamCards[i];
+                          Firestore.instance
+                              .collection('users')
+                              .document(loggedInUser.email)
+                              .collection("dreams")
+                              .document("dream" + i.toString())
+                              .updateData({
+                            'title': dCard.dreamTitle,
+                            'position': dCard.position,
+                            'icon': inverseIconMap[dCard.icon],
+                          });
+                        }
+                        Firestore.instance
+                            .collection('users')
+                            .document(loggedInUser.email)
+                            .collection("dreams")
+                            .document("dream" + (dreamCards.length).toString())
+                            .delete();
+                        removedDream = true;
+
                         Navigator.of(context).pop();
                       });
                     },

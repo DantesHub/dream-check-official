@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components/category_icons.dart';
+import 'components/Constants.dart';
 
 class CategoryList extends StatelessWidget {
   static const id = 'categorylist_page';
@@ -26,7 +27,7 @@ class CategoryList extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
-            color: Color(0xFF15C96C),
+            color: titleColor,
           ),
         ),
         backgroundColor: Colors.white,

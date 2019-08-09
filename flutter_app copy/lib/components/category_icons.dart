@@ -15,8 +15,7 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
       children: <Widget>[
         new Category(
           text: "Fitness",
@@ -73,47 +72,47 @@ class Category extends StatelessWidget {
   final IconData iconData;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey, width: 0.1),
-            bottom: BorderSide(
-              color: Colors.black,
-              width: 0.5,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey, width: 0.1),
+          bottom: BorderSide(
+            color: Colors.black,
+            width: 0.5,
           ),
         ),
-        child: FlatButton(
-          padding: EdgeInsets.all(20),
-          color: Colors.white,
-          onPressed: () {
-            onHomePage = false;
-            usersIconData = this.iconData;
-            chosenCategoryText = this.text;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Steps(
-                      icon: usersIconData,
-                      stepsList: s,
-                    ),
+      ),
+      child: FlatButton(
+        padding: EdgeInsets.all(20),
+        color: Colors.white,
+        onPressed: () {
+          onHomePage = false;
+          usersIconData = this.iconData;
+          chosenCategoryText = this.text;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Steps(
+                icon: usersIconData,
+                stepsList: s,
+                title: userDreamTitle,
               ),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                text,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              Icon(
-                iconData,
-                size: 30,
-              ),
-            ],
-          ),
+            ),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Icon(
+              iconData,
+              size: 30,
+              color: mainAccentColor,
+            ),
+          ],
         ),
       ),
     );
