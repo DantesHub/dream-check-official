@@ -16,7 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'login/whatshouldhappen.dart';
 import 'step_builder.dart';
 import 'completed_dreams.dart';
+import 'settings_page.dart';
 import 'components/completed_dream.dart';
+import 'components/user_isnt_pro_alert.dart';
 
 String fsTitleDelete;
 int counter = 1;
@@ -369,14 +371,31 @@ class _HomePageState extends State<HomePage> {
       dreamCards.add(
         new GestureDetector(
           onTap: () {
+            print("dreamCardslength ${dreamCards.length}");
+            if (dreamCards.length == 3) {
+              print("wegotherefirst");
+              if (isUserPro != true) {
+                print("wegothere");
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return new userNotProDialog();
+                    });
+              }
+            }
             addDreamGotPressed = true;
             positionOfDreamPressed = 0;
-            Navigator.push(
-              mainContext,
-              MaterialPageRoute(
-                builder: (mainContext) => TitleMakerPage(),
-              ),
-            );
+            //if user who isnt pro tries to create a new dream after making 2
+            //user isnt pro pop up will appear
+            if (isUserPro == true ||
+                (isUserPro == false && dreamCards.length != 3)) {
+              Navigator.push(
+                mainContext,
+                MaterialPageRoute(
+                  builder: (mainContext) => TitleMakerPage(),
+                ),
+              );
+            }
           },
           child: Container(
             margin: EdgeInsets.all(20.0),

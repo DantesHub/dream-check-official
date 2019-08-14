@@ -14,7 +14,9 @@ import 'components/dream_card.dart';
 import 'completed_dreams.dart';
 import 'step_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+bool isUserPro = false;
 bool onSettingsPage = false;
 
 class Settings extends StatefulWidget {
@@ -56,6 +58,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   void initState() {
+    onTargetPage = false;
     super.initState();
     getCurrentUser();
     onSettingsPage = true;
@@ -154,7 +157,7 @@ class _SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Tap to Rate our app!",
+                  " Tap to Rate our app!",
                   style: TextStyle(fontSize: 18.0),
                 ),
                 Padding(
@@ -168,27 +171,100 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           Divider(),
-          Center(
-            child: OvalButtonForLogIn(
-              onPressed: () {
-                for (int i = 1; i < dreamCards.length; i++) {
-                  DreamCard dCard = dreamCards[i];
-                  dCard.stepList.clear();
-                }
-                completedDreamsList.clear();
-                registerWasPressed = false;
-                logoutUser();
-                editStepWasPressed = false;
-                onSettingsPage = false;
-                counter = 1;
-                initStateCalled = false;
-                isFinished = false;
-                flutterLocalNotificationPlugin.cancelAll();
-                firstStepList.clear();
-                dreamCards.clear();
-              },
-              text: "Logout",
-              color: Colors.redAccent,
+          (isUserPro)
+              ? FlatButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        " Go Pro!",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Icon(
+                          Icons.lock,
+                          size: 35.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          " Your Pro!",
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
+                        child: Icon(
+                          Icons.mood,
+                          size: 35.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+          Divider(),
+          Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(
+                    " Contact us with any questions \n or bugs you find!\n @dreamchecklab@gmail.com",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(34.0),
+                  child: Icon(
+                    Icons.mail,
+                    size: 35.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.only(top: 24.0),
+            child: Center(
+              child: OvalButtonForLogIn(
+                onPressed: () {
+                  for (int i = 1; i < dreamCards.length; i++) {
+                    DreamCard dCard = dreamCards[i];
+                    dCard.stepList.clear();
+                  }
+                  completedDreamsList.clear();
+                  registerWasPressed = false;
+                  logoutUser();
+                  editStepWasPressed = false;
+                  onSettingsPage = false;
+                  counter = 1;
+                  initStateCalled = false;
+                  isFinished = false;
+                  flutterLocalNotificationPlugin.cancelAll();
+                  firstStepList.clear();
+                  dreamCards.clear();
+                },
+                text: "Logout",
+                color: Colors.redAccent,
+              ),
             ),
           )
         ],
