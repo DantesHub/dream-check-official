@@ -5,7 +5,6 @@ import 'login/welcome_page.dart';
 import 'login/oval_button_for_log.dart';
 import 'home_page.dart';
 import 'target_page.dart';
-import 'restart_widget.dart';
 import 'components/BottomHomeBar.dart';
 import 'login/register_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -124,25 +123,49 @@ class _SettingsState extends State<Settings> {
             children: <Widget>[
               Text(
                 "\t  Toggle off to stop Tip pop up",
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
               ),
-              Switch(
-                  activeColor: mainAccentColor,
-                  activeTrackColor: Colors.greenAccent,
-                  value: wantsPopUp,
-                  onChanged: (value) {
-                    setState(() {
-                      wantsPopUp = value;
-                      Firestore.instance
-                          .collection('users')
-                          .document(loggedInUser.email)
-                          .setData({
-                        'user': loggedInUser.email,
-                        "wantsPopUp": wantsPopUp,
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Switch(
+                    activeColor: mainAccentColor,
+                    activeTrackColor: Colors.greenAccent,
+                    value: wantsPopUp,
+                    onChanged: (value) {
+                      setState(() {
+                        wantsPopUp = value;
+                        Firestore.instance
+                            .collection('users')
+                            .document(loggedInUser.email)
+                            .setData({
+                          'user': loggedInUser.email,
+                          "wantsPopUp": wantsPopUp,
+                        });
                       });
-                    });
-                  }),
+                    }),
+              ),
             ],
+          ),
+          Divider(),
+          FlatButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Tap to Rate our app!",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Icon(
+                    Icons.star_border,
+                    size: 35.0,
+                  ),
+                ),
+              ],
+            ),
           ),
           Divider(),
           Center(

@@ -354,7 +354,6 @@ class _StepMakerState extends State<StepMaker> {
                           margin: EdgeInsets.only(bottom: 40.0),
                           height: 40.0,
                           child: TextField(
-                            maxLines: 2,
                             style: TextStyle(fontSize: 20.0),
                             controller: myController,
                             decoration: InputDecoration(
@@ -362,6 +361,7 @@ class _StepMakerState extends State<StepMaker> {
                                 contentPadding:
                                     EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                                 hintText: "Enter your step here"),
+                            maxLines: 1,
                           ),
                         ),
                       ),

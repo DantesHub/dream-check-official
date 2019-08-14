@@ -29,6 +29,7 @@ bool isFinished = false;
 bool alreadyCalled = false;
 int length;
 int highestUniqueNumber = 0;
+int highestCdUniqueNumber = 0;
 bool removedDream = false;
 bool initStateCalled = false;
 bool wantsPopUpTest = false;
@@ -153,15 +154,23 @@ class _HomePageState extends State<HomePage> {
         final dateCompleted = cd.data['dateCompleted'];
         final icon = cd.data['icon'];
         final title = cd.data['title'];
+        final fireCdUniqueNumber = cd.data['uniqueFinishedNumber'];
 
         completedDreamsList.add(
           new CompletedDream(
             dreamText: title,
             iconData: icon,
             dateCompleted: dateCompleted,
+            finishedUniqueNumber: fireCdUniqueNumber,
           ),
         );
+        if (fireCdUniqueNumber != null) {
+          if (fireCdUniqueNumber >= highestCdUniqueNumber) {
+            highestCdUniqueNumber = fireCdUniqueNumber;
+          }
+        }
       }
+
       final dreams = await _firestore
           .collection('users')
           .document(loggedInUserString)
@@ -175,7 +184,7 @@ class _HomePageState extends State<HomePage> {
 
         final position = d.data['position'];
 
-        positions.add(int.parse(position));
+        positions.add(position);
         final fireSteps = await _firestore
             .collection('users')
             .document(loggedInUserString)
@@ -200,7 +209,6 @@ class _HomePageState extends State<HomePage> {
           if (uniqueNumberr != null) {
             if (uniqueNumberr >= highestUniqueNumber) {
               highestUniqueNumber = uniqueNumberr;
-              print(highestUniqueNumber);
             }
           }
 
@@ -316,7 +324,7 @@ class _HomePageState extends State<HomePage> {
             icon: iconMap[iconTitle],
             dreamTitle: dreamTitle,
             stepList: sCards,
-            position: int.parse(position),
+            position: position,
             fsTitle: "dream" + counter.toString(),
           ),
         );
@@ -329,6 +337,12 @@ class _HomePageState extends State<HomePage> {
           uniqueNumber = 0;
         } else {
           uniqueNumber++;
+        }
+        uniqueFinishedNumber = highestCdUniqueNumber;
+        if (uniqueFinishedNumber == null) {
+          uniqueFinishedNumber = 0;
+        } else {
+          uniqueFinishedNumber++;
         }
         calledAlready = true;
         isFinished = true;
@@ -414,6 +428,7 @@ class _HomePageState extends State<HomePage> {
     return RestartWidget(
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             'My Visions',
             style: TextStyle(

@@ -70,9 +70,10 @@ class _TargetCardState extends State<TargetCard> {
               ),
 
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 10.0, 4.0, 10.0),
+                    padding: const EdgeInsets.fromLTRB(8.0, 5.0, 4.0, 10.0),
                     child: Text(
                       "Finish By: " + widget.cardDateVariable,
                       style: TextStyle(
@@ -82,10 +83,11 @@ class _TargetCardState extends State<TargetCard> {
                       ),
                     ),
                   ),
-                  Flexible(
+                  Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 12.0),
                       child: Container(
+                        height: 80.0,
                         width: (MediaQuery.of(context).size.width > 400)
                             ? c_width
                             : 250.0,
@@ -99,45 +101,56 @@ class _TargetCardState extends State<TargetCard> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Dream: ${widget.dreamTitle}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13.0),
+                    ),
+                  ),
                 ],
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  MaterialButton(
-                    elevation: 8.0,
-                    height: 30.0,
-                    minWidth: 10.0,
-                    color: Colors.grey[100],
-                    textColor: Colors.white,
-                    onPressed: () {
-                      setState(() {
-                        onSettingsPage = false;
-                        onHomePage = false;
-                        onTargetPage = false;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Steps(
-                                    title: widget.dreamTitle,
-                                    icon: widget.icon,
-                                    stepsList: widget.stepsList)));
-                      });
-                    },
-                    splashColor: Colors.greenAccent,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0, top: 6.0),
-                      child: (widget.stepNumber > 9)
-                          ? Icon(
-                              Icons.more_horiz,
-                              size: 20.0,
-                              color: mainAccentColor,
-                            )
-                          : Icon(
-                              Icons.more_horiz,
-                              size: 26.0,
-                              color: mainAccentColor,
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6.0),
+                    child: MaterialButton(
+                      elevation: 8.0,
+                      height: 30.0,
+                      minWidth: 10.0,
+                      color: Colors.grey[100],
+                      textColor: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          onSettingsPage = false;
+                          onHomePage = false;
+                          onTargetPage = false;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Steps(
+                                      title: widget.dreamTitle,
+                                      icon: widget.icon,
+                                      stepsList: widget.stepsList)));
+                        });
+                      },
+                      splashColor: Colors.greenAccent,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 6.0, top: 6.0),
+                        child: (widget.stepNumber > 9)
+                            ? Icon(
+                                Icons.more_horiz,
+                                size: 15.0,
+                                color: mainAccentColor,
+                              )
+                            : Icon(
+                                Icons.more_horiz,
+                                size: 20.0,
+                                color: mainAccentColor,
+                              ),
+                      ),
                     ),
                   ),
                 ],

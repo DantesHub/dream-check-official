@@ -134,16 +134,19 @@ class _StepCardState extends State<StepCard> {
                               ),
                             ),
                           ),
-                          Container(
-                            width: (MediaQuery.of(context).size.width > 400)
-                                ? c_width
-                                : 250.0,
-                            child: Text(
-                              widget.stepName,
-                              style: TextStyle(
-                                fontSize: 17.0,
+                          Flexible(
+                            child: Container(
+                              width: (MediaQuery.of(context).size.width > 400)
+                                  ? c_width
+                                  : 250.0,
+                              child: Text(
+                                widget.stepName,
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                ),
                               ),
-                              overflow: TextOverflow.fade,
                             ),
                           ),
                         ],

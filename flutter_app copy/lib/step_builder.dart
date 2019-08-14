@@ -20,6 +20,7 @@ import 'completed_dreams.dart';
 import 'components/completed_dream.dart';
 import 'components/alert_dialog.dart';
 
+int uniqueFinishedNumber;
 List<StepCard> steps;
 bool wantsPopUp = true;
 bool onStepBuilderPage = false;
@@ -314,146 +315,203 @@ class _StepsState extends State<Steps> {
 
   void _choiceSelected(Item choice) {
     setState(() {
-      if (choice == Choices.Add) {
-        editStepWasPressed = false;
-        notificationFormatDay = "Day";
-        stepIndexCounter = widget.stepsList.length;
-        userSelection = "Repeat";
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => new StepMaker(
-              "Time",
-              "",
-              "Target Date",
-              false,
-              "Day",
-              "Repeat",
+      if (addDreamGotPressed == false) {
+        if (choice == Choices.Add) {
+          editStepWasPressed = false;
+          notificationFormatDay = "Day";
+          stepIndexCounter = widget.stepsList.length;
+          userSelection = "Repeat";
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => new StepMaker(
+                "Time",
+                "",
+                "Target Date",
+                false,
+                "Day",
+                "Repeat",
+              ),
             ),
-          ),
-        );
-      } else if (choice == Choices.Done) {
-        onHomePage = true;
-        onSettingsPage = false;
-        if (addDreamGotPressed == true) {
-          _firestore
-              .collection('users')
-              .document(loggedInUser.email.toString())
-              .collection("dreams")
-              .document("dream" + dreamCards.length.toString())
-              .setData({
-            'title': userDreamTitle,
-            'position': dreamCards.length.toString(),
-            'icon': chosenCategoryText,
-          });
-        }
-        setState(() {
-          stepsClone = List.from(widget.stepsList);
+          );
+        } else if (choice == Choices.Done) {
+          onHomePage = true;
+          onSettingsPage = false;
           if (addDreamGotPressed == true) {
-            dreamCards.add(new DreamCard(
-              icon: usersIconData,
-              dreamTitle: userDreamTitle,
-              stepList: stepsClone,
-              position: dreamCards.length,
-              fsTitle: "dream" + dreamCards.length.toString(),
-            ));
-            counter++;
-            stepIndexCounter = 0;
-            widget.stepsList.clear();
-            addDreamGotPressed = false;
-            editStepWasPressed = false;
-          }
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ),
-          );
-        });
-      } else {
-        if (widget.stepsList.length != 0) {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return FinishedDreamAlert(
-                  dreamTitle: widget.title,
-                  iconData: widget.icon,
-                );
-              });
-        } else {
-          for (int i = 1; i < dreamCards.length; i++) {
-            Firestore.instance
+            _firestore
                 .collection('users')
-                .document(loggedInUser.email)
+                .document(loggedInUser.email.toString())
                 .collection("dreams")
-                .document("dream" + i.toString())
-                .collection("stepListForDream")
-                .getDocuments()
-                .then((snapshot) {
-              for (DocumentSnapshot ds in snapshot.documents) {
-                ds.reference.delete();
-              }
-            });
-          }
-          dreamCards.removeAt(positionOfDreamPressed);
-          counter--;
-          for (int i = 1; i < dreamCards.length; i++) {
-            DreamCard d = dreamCards[i];
-            d.position = i;
-          }
-          for (int i = 1; i < dreamCards.length; i++) {
-            print("wathappned");
-            DreamCard dCard = dreamCards[i];
-            Firestore.instance
-                .collection('users')
-                .document(loggedInUser.email)
-                .collection("dreams")
-                .document("dream" + i.toString())
+                .document("dream" + dreamCards.length.toString())
                 .setData({
-              'title': dCard.dreamTitle,
-              'position': dCard.position,
-              'icon': inverseIconMap[dCard.icon],
+              'title': userDreamTitle,
+              'position': dreamCards.length,
+              'icon': chosenCategoryText,
             });
           }
-          Firestore.instance
-              .collection('users')
-              .document(loggedInUser.email)
-              .collection("dreams")
-              .document("dream" + (dreamCards.length).toString())
-              .delete();
-          removedDream = true;
-          onFinishedDreams = true;
-          var now = new DateTime.now();
-          completedDreamsList.add(new CompletedDream(
-            dreamText: widget.title,
-            iconData: inverseIconMap[widget.icon],
-            dateCompleted: new DateFormat("dd-MM-yyyy").format(now),
-          ));
-          Firestore.instance
-              .collection('users')
-              .document(loggedInUser.email)
-              .collection("completedDreams")
-              .document(now.toString())
-              .setData({
-            "title": widget.title,
-            "icon": inverseIconMap[widget.icon],
-            "dateCompleted": new DateFormat("dd-MM-yyyy").format(now),
+          setState(() {
+            stepsClone = List.from(widget.stepsList);
+            if (addDreamGotPressed == true) {
+              dreamCards.add(new DreamCard(
+                icon: usersIconData,
+                dreamTitle: userDreamTitle,
+                stepList: stepsClone,
+                position: dreamCards.length,
+                fsTitle: "dream" + dreamCards.length.toString(),
+              ));
+              counter++;
+              stepIndexCounter = 0;
+              widget.stepsList.clear();
+              addDreamGotPressed = false;
+              editStepWasPressed = false;
+            }
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
           });
+        } else if (choice == Choices.Finished) {
+          if (widget.stepsList.length != 0) {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return FinishedDreamAlert(
+                    dreamTitle: widget.title,
+                    iconData: widget.icon,
+                  );
+                });
+          } else {
+            for (int i = 1; i < dreamCards.length; i++) {
+              Firestore.instance
+                  .collection('users')
+                  .document(loggedInUser.email)
+                  .collection("dreams")
+                  .document("dream" + i.toString())
+                  .collection("stepListForDream")
+                  .getDocuments()
+                  .then((snapshot) {
+                for (DocumentSnapshot ds in snapshot.documents) {
+                  ds.reference.delete();
+                }
+              });
+            }
+            dreamCards.removeAt(positionOfDreamPressed);
+            counter--;
+            for (int i = 1; i < dreamCards.length; i++) {
+              DreamCard d = dreamCards[i];
+              d.position = i;
+            }
+            for (int i = 1; i < dreamCards.length; i++) {
+              DreamCard dCard = dreamCards[i];
+              Firestore.instance
+                  .collection('users')
+                  .document(loggedInUser.email)
+                  .collection("dreams")
+                  .document("dream" + i.toString())
+                  .setData({
+                'title': dCard.dreamTitle,
+                'position': dCard.position,
+                'icon': inverseIconMap[dCard.icon],
+              });
+            }
+            Firestore.instance
+                .collection('users')
+                .document(loggedInUser.email)
+                .collection("dreams")
+                .document("dream" + (dreamCards.length).toString())
+                .delete();
+            removedDream = true;
+            onFinishedDreams = true;
+            var now = new DateTime.now();
+            completedDreamsList.add(new CompletedDream(
+              dreamText: widget.title,
+              iconData: inverseIconMap[widget.icon],
+              dateCompleted: new DateFormat("dd-MM-yyyy").format(now),
+              finishedUniqueNumber: uniqueFinishedNumber,
+            ));
+            Firestore.instance
+                .collection('users')
+                .document(loggedInUser.email)
+                .collection("completedDreams")
+                .document(uniqueFinishedNumber.toString())
+                .setData({
+              "title": widget.title,
+              "icon": inverseIconMap[widget.icon],
+              "dateCompleted": new DateFormat("dd-MM-yyyy").format(now),
+              "uniqueFinishedNumber": uniqueFinishedNumber,
+            });
+            uniqueFinishedNumber++;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FinishedDreams(),
+              ),
+            );
+          }
+        }
+      } else if (addDreamGotPressed == true) {
+        if (choice == Choices.Add || choice == AddDreamChoices.Add) {
+          editStepWasPressed = false;
+          notificationFormatDay = "Day";
+          stepIndexCounter = widget.stepsList.length;
+          userSelection = "Repeat";
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FinishedDreams(),
+              builder: (context) => new StepMaker(
+                "Time",
+                "",
+                "Target Date",
+                false,
+                "Day",
+                "Repeat",
+              ),
             ),
           );
+        } else if (choice == Choices.Done || choice == AddDreamChoices.Done) {
+          onHomePage = true;
+          onSettingsPage = false;
+          if (addDreamGotPressed == true) {
+            _firestore
+                .collection('users')
+                .document(loggedInUser.email.toString())
+                .collection("dreams")
+                .document("dream" + dreamCards.length.toString())
+                .setData({
+              'title': userDreamTitle,
+              'position': dreamCards.length,
+              'icon': chosenCategoryText,
+            });
+          }
+          setState(() {
+            stepsClone = List.from(widget.stepsList);
+            if (addDreamGotPressed == true) {
+              dreamCards.add(new DreamCard(
+                icon: usersIconData,
+                dreamTitle: userDreamTitle,
+                stepList: stepsClone,
+                position: dreamCards.length,
+                fsTitle: "dream" + dreamCards.length.toString(),
+              ));
+              counter++;
+              stepIndexCounter = 0;
+              widget.stepsList.clear();
+              addDreamGotPressed = false;
+              editStepWasPressed = false;
+            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          });
         }
       }
     });
-
-//    onPressed: () {
-
-//    },
-//    onPressed: () {
   }
 
   @override
@@ -466,17 +524,30 @@ class _StepsState extends State<Steps> {
             Icons.more_vert,
             color: Colors.black,
           ),
-          itemBuilder: (BuildContext context) {
-            return Choices.choices.map((Item choice) {
-              return new PopupMenuItem<Item>(
-                value: choice,
-                child: new ListTile(
-                  title: choice.title,
-                  trailing: choice.icon,
-                ),
-              );
-            }).toList();
-          },
+          itemBuilder: (addDreamGotPressed == false)
+              ? (BuildContext context) {
+                  return Choices.choices.map((Item choice) {
+                    return new PopupMenuItem<Item>(
+                      value: choice,
+                      child: new ListTile(
+                        title: choice.title,
+                        trailing: choice.icon,
+                      ),
+                    );
+                  }).toList();
+                }
+              : (BuildContext context) {
+                  return AddDreamChoices.finisheddreamchoices
+                      .map((Item choice) {
+                    return new PopupMenuItem<Item>(
+                      value: choice,
+                      child: new ListTile(
+                        title: choice.title,
+                        trailing: choice.icon,
+                      ),
+                    );
+                  }).toList();
+                },
           onSelected: _choiceSelected,
         ),
         centerTitle: true,
