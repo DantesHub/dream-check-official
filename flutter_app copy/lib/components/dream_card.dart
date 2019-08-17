@@ -107,7 +107,7 @@ class _DreamCardState extends State<DreamCard> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 40.0),
               child: Icon(
                 widget.icon,
                 size: 50.0,

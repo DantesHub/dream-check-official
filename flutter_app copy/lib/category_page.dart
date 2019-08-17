@@ -8,7 +8,7 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         actions: <Widget>[
           IconButton(

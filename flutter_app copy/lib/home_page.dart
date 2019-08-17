@@ -372,6 +372,8 @@ class _HomePageState extends State<HomePage> {
         new GestureDetector(
           onTap: () {
             print("dreamCardslength ${dreamCards.length}");
+            print(
+                "is this true ${(isUserPro == false && dreamCards.length != 3)}");
             if (dreamCards.length == 3) {
               print("wegotherefirst");
               if (isUserPro != true) {

@@ -20,7 +20,7 @@ import 'completed_dreams.dart';
 import 'components/completed_dream.dart';
 import 'components/alert_dialog.dart';
 
-int uniqueFinishedNumber;
+int uniqueFinishedNumber = 0;
 List<StepCard> steps;
 bool wantsPopUp = true;
 bool onStepBuilderPage = false;
@@ -443,6 +443,7 @@ class _StepsState extends State<Steps> {
               "dateCompleted": new DateFormat("dd-MM-yyyy").format(now),
               "uniqueFinishedNumber": uniqueFinishedNumber,
             });
+            print("unq $uniqueFinishedNumber");
             uniqueFinishedNumber++;
             Navigator.push(
               context,
