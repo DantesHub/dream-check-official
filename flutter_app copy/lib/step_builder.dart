@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'RepeatPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:vision_check_test/Confirmation.dart';
+import 'package:vision_check_test/step_finished_confirmation.dart';
 import 'settings_page.dart';
 import 'components/choices_constants.dart';
 import 'finished_dream_alert.dart';
@@ -488,8 +488,8 @@ class _StepsState extends State<Steps> {
             });
           }
           setState(() {
-            stepsClone = List.from(widget.stepsList);
             if (addDreamGotPressed == true) {
+              stepsClone = List.from(widget.stepsList);
               dreamCards.add(new DreamCard(
                 icon: usersIconData,
                 dreamTitle: userDreamTitle,

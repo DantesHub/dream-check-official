@@ -58,6 +58,7 @@ class _DreamCardState extends State<DreamCard> {
         });
       },
       onTap: () {
+        addDreamGotPressed = false;
         onHomePage = false;
         fsTitleDelete = widget.fsTitle;
         dreamPosition = widget.position;

@@ -122,9 +122,12 @@ class _SettingsState extends State<Settings> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Text(
-            "Hold down dream to delete",
-            style: TextStyle(color: Colors.grey, fontSize: 20.0),
+          Padding(
+            padding: const EdgeInsets.only(top: 14.0),
+            child: Text(
+              "Hold down dream to delete",
+              style: TextStyle(color: Colors.grey, fontSize: 20.0),
+            ),
           ),
           Divider(),
           Row(

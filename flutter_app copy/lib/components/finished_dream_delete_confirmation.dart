@@ -85,7 +85,7 @@ class _FinishedDreamConfirmation extends State<FinishedDreamConfirmation> {
                 ),
                 Container(
                   width: 170.0,
-                  color: Colors.grey[100],
+                  color: Colors.grey[200],
                   child: FlatButton(
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),

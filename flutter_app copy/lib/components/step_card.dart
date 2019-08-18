@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vision_check_test/StepMakerPage.dart';
-import 'VerticalDivider.dart';
 import 'Constants.dart';
-import 'dream_card.dart';
-import 'package:vision_check_test/step_builder.dart';
-import 'Constants.dart';
-import 'package:vision_check_test/Confirmation.dart';
+import 'package:vision_check_test/step_finished_confirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'local_notification_helper.dart';
-import 'package:date_format/date_format.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:vision_check_test/RepeatPage.dart';
 
 int stepNumberPressed;
@@ -144,7 +136,7 @@ class _StepCardState extends State<StepCard> {
                             child: Container(
                               width: (MediaQuery.of(context).size.width > 400)
                                   ? c_width
-                                  : 250.0,
+                                  : 269.0,
                               child: Text(
                                 widget.stepName,
                                 softWrap: true,

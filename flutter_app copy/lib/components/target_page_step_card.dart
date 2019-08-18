@@ -5,7 +5,7 @@ import 'Constants.dart';
 import 'dream_card.dart';
 import 'package:vision_check_test/step_builder.dart';
 import 'Constants.dart';
-import 'package:vision_check_test/Confirmation.dart';
+import 'package:vision_check_test/step_finished_confirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vision_check_test/target_page.dart';
 import 'package:vision_check_test/settings_page.dart';

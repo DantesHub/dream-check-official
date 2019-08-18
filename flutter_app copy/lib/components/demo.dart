@@ -7,7 +7,7 @@ import 'Constants.dart';
 import 'dream_card.dart';
 import 'package:vision_check_test/step_builder.dart';
 import 'Constants.dart';
-import 'package:vision_check_test/Confirmation.dart';
+import 'package:vision_check_test/step_finished_confirmation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'local_notification_helper.dart';
@@ -69,24 +69,24 @@ class _MyHomePageState extends State<MyHomePage> {
         children: gangList
             .map(
               (item) => Dismissible(
-                    key: new Key(UniqueKey().toString()),
-                    onDismissed: (direction) {
-                      setState(() {
-                        gangList.remove(item);
-                      });
-                    },
-                    direction: DismissDirection.endToStart,
-                    child: new StepCard(
-                      key: new Key(UniqueKey().toString()),
-                      stepNumber: (1),
-                      stepName: item.stepName,
-                      cardReminderDate: "w",
-                      cardReminderTime: "f",
-                      cardDateVariable: "s",
-                      cardWantsRemind: true,
-                      uniqueNumber: uniqueNumber,
-                    ),
-                  ),
+                key: new Key(UniqueKey().toString()),
+                onDismissed: (direction) {
+                  setState(() {
+                    gangList.remove(item);
+                  });
+                },
+                direction: DismissDirection.endToStart,
+                child: new StepCard(
+                  key: new Key(UniqueKey().toString()),
+                  stepNumber: (1),
+                  stepName: item.stepName,
+                  cardReminderDate: "w",
+                  cardReminderTime: "f",
+                  cardDateVariable: "s",
+                  cardWantsRemind: true,
+                  uniqueNumber: uniqueNumber,
+                ),
+              ),
             )
             .toList(),
         onReorder: (int start, int current) {

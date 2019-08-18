@@ -14,83 +14,40 @@ class _userNotProDialogState extends State<userNotProDialog> {
         borderRadius: BorderRadius.circular(18.0),
       ),
       title: Text(
-        "Tips",
+        "Non-Pro User",
         textAlign: TextAlign.center,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(
-                "1. ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              SizedBox(
-                width: 10.0,
-                height: 10.0,
-              ),
-              Text(
-                  "Slide left to delete a \nstep card, this will not \nrenumber your list.\n")
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "2. ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              SizedBox(
-                width: 10.0,
-                height: 10.0,
-              ),
-              Text(
-                  "Tap a card to edit it, \npress the green check \nto complete a step\n Does not renumber list\n")
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "3. ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              SizedBox(
-                width: 10.0,
-                height: 10.0,
-              ),
-              Text(
-                  "Long press a card \nto rearrange \nand renumber your list\n")
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "4. ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              SizedBox(
-                width: 10.0,
-                height: 10.0,
-              ),
-              Text(
-                  "Once you complete your \ndream (at least 3 steps)\n it will be added to\n your trophy case\n")
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text(
-                "Toggle off to stop Tip\n pop up",
-                style: TextStyle(color: Colors.grey, fontSize: 15.0),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Text(
+              "Non-Pro users are limited to creating two dreams. To be able to create "
+              "unlimited dreams consider going pro!",
+              style: TextStyle(fontSize: 18.0),
+              textAlign: TextAlign.center,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                new Container(
+                  color: Colors.grey[200],
+                  child: FlatButton(
+                    onPressed: () {
+                      //Code to make user become pro
+                    },
+                    child: Text(
+                      "Go Pro!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: mainAccentColor),
+                    ),
+                  ),
+                ),
                 new Container(
                   color: Colors.black,
                   child: FlatButton(

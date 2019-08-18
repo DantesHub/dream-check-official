@@ -172,13 +172,14 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 ),
                 Container(
                   width: 170.0,
-                  color: Colors.redAccent,
+                  color: Colors.grey[200],
                   child: FlatButton(
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
                         "Nope!",
-                        style: TextStyle(color: Colors.white, fontSize: 30.0),
+                        style:
+                            TextStyle(color: mainAccentColor, fontSize: 30.0),
                       ),
                     ),
                     onPressed: () {
