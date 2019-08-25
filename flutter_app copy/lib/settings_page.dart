@@ -229,12 +229,15 @@ class _SettingsState extends State<Settings> {
           Container(
             child: FlatButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChangeColor(),
-                  ),
-                );
+                //ONLY CHANGE IF USER IS PRO
+                if (isUserPro == true) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChangeColor(),
+                    ),
+                  );
+                }
               },
               child: Row(
                 mainAxisSize: MainAxisSize.max,
