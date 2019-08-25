@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       body: ModalProgressHUD(
         inAsyncCall: loading,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 50.0),
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 100.0),
           child: ListView(
             children: <Widget>[
               Container(
@@ -118,6 +118,9 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(color: Colors.blue),
                     ),
                     onPressed: () async {
+                      _firestore.collection('users').document(email).setData({
+                        'user': email,
+                      });
                       return showDialog(
                         context: context,
                         builder: (context) {
@@ -229,9 +232,6 @@ class _LoginPageState extends State<LoginPage> {
                     final user = await Auth()
                         .signInWithEmailAndPassword(email, password);
                     if (user != null) {
-                      _firestore.collection('users').document(email).setData({
-                        'user': email,
-                      });
                       _ensureLoggedIn();
                       Navigator.push(
                           context,

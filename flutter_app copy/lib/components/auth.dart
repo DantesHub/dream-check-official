@@ -10,18 +10,15 @@ abstract class BaseAuth {
 class Auth implements BaseAuth {
   Future<String> signInWithEmailAndPassword(
       String email, String password) async {
-    final AuthResult result = await FirebaseAuth.instance
+    FirebaseUser user = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
-    FirebaseUser user = result.user;
-
     return user.uid;
   }
 
   Future<String> createUserWithEmailAndPassword(
       String email, String password) async {
-    final AuthResult result = await FirebaseAuth.instance
+    FirebaseUser user = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    FirebaseUser user = result.user;
     return user.uid;
   }
 

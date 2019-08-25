@@ -15,10 +15,11 @@ import 'restart_widget.dart';
 //sup mr mascolo
 void main() {
   runApp(
-    new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
+    new RestartWidget(
+      child: new MaterialApp(
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
     ),
   );
 }

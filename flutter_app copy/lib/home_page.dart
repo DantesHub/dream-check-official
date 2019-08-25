@@ -16,9 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'login/whatshouldhappen.dart';
 import 'step_builder.dart';
 import 'completed_dreams.dart';
-import 'settings_page.dart';
 import 'components/completed_dream.dart';
-import 'components/user_isnt_pro_alert.dart';
 
 String fsTitleDelete;
 int counter = 1;
@@ -31,7 +29,6 @@ bool isFinished = false;
 bool alreadyCalled = false;
 int length;
 int highestUniqueNumber = 0;
-int highestCdUniqueNumber = 0;
 bool removedDream = false;
 bool initStateCalled = false;
 bool wantsPopUpTest = false;
@@ -156,23 +153,15 @@ class _HomePageState extends State<HomePage> {
         final dateCompleted = cd.data['dateCompleted'];
         final icon = cd.data['icon'];
         final title = cd.data['title'];
-        final fireCdUniqueNumber = cd.data['uniqueFinishedNumber'];
 
         completedDreamsList.add(
           new CompletedDream(
             dreamText: title,
             iconData: icon,
             dateCompleted: dateCompleted,
-            finishedUniqueNumber: fireCdUniqueNumber,
           ),
         );
-        if (fireCdUniqueNumber != null) {
-          if (fireCdUniqueNumber >= highestCdUniqueNumber) {
-            highestCdUniqueNumber = fireCdUniqueNumber;
-          }
-        }
       }
-
       final dreams = await _firestore
           .collection('users')
           .document(loggedInUserString)
@@ -186,7 +175,7 @@ class _HomePageState extends State<HomePage> {
 
         final position = d.data['position'];
 
-        positions.add(position);
+        positions.add(int.parse(position));
         final fireSteps = await _firestore
             .collection('users')
             .document(loggedInUserString)
@@ -211,6 +200,7 @@ class _HomePageState extends State<HomePage> {
           if (uniqueNumberr != null) {
             if (uniqueNumberr >= highestUniqueNumber) {
               highestUniqueNumber = uniqueNumberr;
+              print(highestUniqueNumber);
             }
           }
 
@@ -326,7 +316,7 @@ class _HomePageState extends State<HomePage> {
             icon: iconMap[iconTitle],
             dreamTitle: dreamTitle,
             stepList: sCards,
-            position: position,
+            position: int.parse(position),
             fsTitle: "dream" + counter.toString(),
           ),
         );
@@ -339,12 +329,6 @@ class _HomePageState extends State<HomePage> {
           uniqueNumber = 0;
         } else {
           uniqueNumber++;
-        }
-        uniqueFinishedNumber = highestCdUniqueNumber;
-        if (uniqueFinishedNumber == null) {
-          uniqueFinishedNumber = 0;
-        } else {
-          uniqueFinishedNumber++;
         }
         calledAlready = true;
         isFinished = true;
@@ -371,33 +355,14 @@ class _HomePageState extends State<HomePage> {
       dreamCards.add(
         new GestureDetector(
           onTap: () {
-            print("dreamCardslength ${dreamCards.length}");
-            print(
-                "is this true ${(isUserPro == false && dreamCards.length != 3)}");
-            if (dreamCards.length == 3) {
-              print("wegotherefirst");
-              if (isUserPro != true) {
-                print("wegothere");
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return new userNotProDialog();
-                    });
-              }
-            }
             addDreamGotPressed = true;
             positionOfDreamPressed = 0;
-            //if user who isnt pro tries to create a new dream after making 2
-            //user isnt pro pop up will appear
-            if (isUserPro == true ||
-                (isUserPro == false && dreamCards.length != 3)) {
-              Navigator.push(
-                mainContext,
-                MaterialPageRoute(
-                  builder: (mainContext) => TitleMakerPage(),
-                ),
-              );
-            }
+            Navigator.push(
+              mainContext,
+              MaterialPageRoute(
+                builder: (mainContext) => TitleMakerPage(),
+              ),
+            );
           },
           child: Container(
             margin: EdgeInsets.all(20.0),
@@ -449,7 +414,6 @@ class _HomePageState extends State<HomePage> {
     return RestartWidget(
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
           title: Text(
             'My Visions',
             style: TextStyle(

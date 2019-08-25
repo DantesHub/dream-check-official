@@ -7,7 +7,6 @@ import 'home_page.dart';
 import 'components/dream_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'step_builder.dart';
 
 class FinishedDreamAlert extends StatefulWidget {
   FinishedDreamAlert({@required this.dreamTitle, @required this.iconData});
@@ -78,6 +77,7 @@ class _FinishedDreamAlertState extends State<FinishedDreamAlert> {
                   d.position = i;
                 }
                 for (int i = 1; i < dreamCards.length; i++) {
+                  print("wathappned");
                   DreamCard dCard = dreamCards[i];
                   Firestore.instance
                       .collection('users')
@@ -103,20 +103,17 @@ class _FinishedDreamAlertState extends State<FinishedDreamAlert> {
                   dreamText: widget.dreamTitle,
                   iconData: inverseIconMap[widget.iconData],
                   dateCompleted: new DateFormat("dd-MM-yyyy").format(now),
-                  finishedUniqueNumber: uniqueFinishedNumber,
                 ));
                 Firestore.instance
                     .collection('users')
                     .document(loggedInUser.email)
                     .collection("completedDreams")
-                    .document(uniqueFinishedNumber.toString())
+                    .document(now.toString())
                     .setData({
                   "title": widget.dreamTitle,
                   "icon": inverseIconMap[widget.iconData],
                   "dateCompleted": new DateFormat("dd-MM-yyyy").format(now),
-                  "uniqueFinishedNumber": uniqueFinishedNumber,
                 });
-                uniqueFinishedNumber++;
                 Navigator.push(
                   context,
                   MaterialPageRoute(

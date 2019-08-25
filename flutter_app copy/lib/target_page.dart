@@ -78,31 +78,16 @@ class _TargetPageState extends State<TargetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 20.0,
         backgroundColor: Colors.white,
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(
-                Icons.gps_fixed,
-                color: Colors.black,
-                size: 27,
-              ),
-            ),
-            Text(
-              'Target Steps',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xFF39414C),
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+        title: Text(
+          'Target Steps',
+          style: TextStyle(
+            color: Color(0xFF39414C),
+            fontSize: 28.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: <Widget>[
           IconButton(

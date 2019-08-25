@@ -58,7 +58,6 @@ class _DreamCardState extends State<DreamCard> {
         });
       },
       onTap: () {
-        addDreamGotPressed = false;
         onHomePage = false;
         fsTitleDelete = widget.fsTitle;
         dreamPosition = widget.position;
@@ -108,7 +107,7 @@ class _DreamCardState extends State<DreamCard> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 40.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Icon(
                 widget.icon,
                 size: 50.0,

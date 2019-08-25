@@ -20,7 +20,6 @@ class _FinishedDreamsState extends State<FinishedDreams> {
     // TODO: implement build
     return Scaffold(
       appBar: new AppBar(
-        centerTitle: true,
         backgroundColor: Colors.white,
         title: Row(
           mainAxisSize: MainAxisSize.min,
