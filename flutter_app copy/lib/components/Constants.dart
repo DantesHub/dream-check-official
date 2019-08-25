@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dream_card.dart';
 
-const Color mainAccentColor = Color(0xFF15C96C);
 Color mainButtonColor = Colors.grey[100];
 const Color mainButtonTextColor = Colors.black;
 List<Widget> dreamCards = new List<Widget>();

@@ -7,6 +7,7 @@ import 'completed_dream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:vision_check_test/step_builder.dart';
+import 'package:vision_check_test/home_page.dart';
 
 int deletedStepNumber;
 bool weDeletedStepNumber = false;
@@ -85,12 +86,12 @@ class _FinishedDreamConfirmation extends State<FinishedDreamConfirmation> {
                 ),
                 Container(
                   width: 170.0,
-                  color: Colors.grey[100],
+                  color: Colors.grey[200],
                   child: FlatButton(
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
-                        "go!",
+                        "Nope!",
                         style:
                             TextStyle(color: mainAccentColor, fontSize: 30.0),
                       ),

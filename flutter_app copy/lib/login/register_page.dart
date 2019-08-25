@@ -69,9 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
         inAsyncCall: loading,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
             children: <Widget>[
               Container(
                 height: 200.0,
@@ -139,7 +137,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       await _firestore
                           .collection('users')
                           .document(email)
-                          .setData({'wantsPopUp': true});
+                          .setData(
+                              {'wantsPopUp': true, 'themeColor': '0xFF15C96C'});
                       registerWasPressed = true;
                       isFinished = true;
                       _ensureLoggedIn();

@@ -7,6 +7,7 @@ import 'package:vision_check_test/target_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:vision_check_test/completed_dreams.dart';
+import 'package:vision_check_test/home_page.dart';
 
 class BottomHomeBar extends StatelessWidget {
   const BottomHomeBar();

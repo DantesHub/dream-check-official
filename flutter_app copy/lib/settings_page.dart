@@ -5,7 +5,6 @@ import 'login/welcome_page.dart';
 import 'login/oval_button_for_log.dart';
 import 'home_page.dart';
 import 'target_page.dart';
-import 'restart_widget.dart';
 import 'components/BottomHomeBar.dart';
 import 'login/register_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -14,8 +13,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'components/dream_card.dart';
 import 'completed_dreams.dart';
 import 'step_builder.dart';
+import 'components/change_theme_color_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+bool isUserPro = false;
 bool onSettingsPage = false;
 
 class Settings extends StatefulWidget {
@@ -26,6 +27,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  static const String iapId = 'paid_dreams';
+
   final flutterLocalNotificationPlugin = FlutterLocalNotificationsPlugin();
   final _firestore = Firestore.instance;
   final _auth = FirebaseAuth.instance;
@@ -57,10 +60,15 @@ class _SettingsState extends State<Settings> {
 
   @override
   void initState() {
+    onHomePage = false;
+    onTargetPage = false;
     super.initState();
+    initPlatformState();
     getCurrentUser();
     onSettingsPage = true;
   }
+
+  Future<void> initPlatformState() async {}
 
   void getCurrentUser() async {
     try {
@@ -113,9 +121,12 @@ class _SettingsState extends State<Settings> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Text(
-            "Hold down dream to delete",
-            style: TextStyle(color: Colors.grey, fontSize: 20.0),
+          Padding(
+            padding: const EdgeInsets.only(top: 14.0),
+            child: Text(
+              "Hold down dream to delete",
+              style: TextStyle(color: Colors.grey, fontSize: 20.0),
+            ),
           ),
           Divider(),
           Row(
@@ -124,48 +135,179 @@ class _SettingsState extends State<Settings> {
             children: <Widget>[
               Text(
                 "\t  Toggle off to stop Tip pop up",
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
               ),
-              Switch(
-                  activeColor: mainAccentColor,
-                  activeTrackColor: Colors.greenAccent,
-                  value: wantsPopUp,
-                  onChanged: (value) {
-                    setState(() {
-                      wantsPopUp = value;
-                      Firestore.instance
-                          .collection('users')
-                          .document(loggedInUser.email)
-                          .setData({
-                        'user': loggedInUser.email,
-                        "wantsPopUp": wantsPopUp,
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Switch(
+                    activeColor: mainAccentColor,
+                    activeTrackColor: Colors.greenAccent,
+                    value: wantsPopUp,
+                    onChanged: (value) {
+                      setState(() {
+                        wantsPopUp = value;
+                        Firestore.instance
+                            .collection('users')
+                            .document(loggedInUser.email)
+                            .setData({
+                          'user': loggedInUser.email,
+                          "wantsPopUp": wantsPopUp,
+                        });
                       });
-                    });
-                  }),
+                    }),
+              ),
             ],
           ),
           Divider(),
-          Center(
-            child: OvalButtonForLogIn(
+          FlatButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  " Tap to Rate our app!",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Icon(
+                    Icons.star_border,
+                    size: 35.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Divider(),
+          (isUserPro == false)
+              ? FlatButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        " Go Pro!",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Icon(
+                          Icons.lock,
+                          size: 35.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          " Your Pro!",
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
+                        child: Icon(
+                          Icons.mood,
+                          size: 35.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+          Divider(),
+          Container(
+            child: FlatButton(
               onPressed: () {
-                for (int i = 1; i < dreamCards.length; i++) {
-                  DreamCard dCard = dreamCards[i];
-                  dCard.stepList.clear();
-                }
-                completedDreamsList.clear();
-                registerWasPressed = false;
-                logoutUser();
-                editStepWasPressed = false;
-                onSettingsPage = false;
-                counter = 1;
-                initStateCalled = false;
-                isFinished = false;
-                flutterLocalNotificationPlugin.cancelAll();
-                firstStepList.clear();
-                dreamCards.clear();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChangeColor(),
+                  ),
+                );
               },
-              text: "Logout",
-              color: Colors.redAccent,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(7.0),
+                    child: Text(
+                      "Change theme (PRO FEATURE)",
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
+                    child: Icon(
+                      Icons.edit,
+                      size: 30.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Divider(),
+          Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(
+                    " Contact us with any questions \n or bugs you find!\n @dreamchecklab@gmail.com",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
+                  child: Icon(
+                    Icons.mail,
+                    size: 30.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.only(top: 24.0),
+            child: Center(
+              child: OvalButtonForLogIn(
+                onPressed: () {
+                  for (int i = 1; i < dreamCards.length; i++) {
+                    DreamCard dCard = dreamCards[i];
+                    dCard.stepList.clear();
+                  }
+                  completedDreamsList.clear();
+                  registerWasPressed = false;
+                  logoutUser();
+                  editStepWasPressed = false;
+                  onSettingsPage = false;
+                  counter = 1;
+                  initStateCalled = false;
+                  isFinished = false;
+                  flutterLocalNotificationPlugin.cancelAll();
+                  firstStepList.clear();
+                  dreamCards.clear();
+                },
+                text: "Logout",
+                color: Colors.redAccent,
+              ),
             ),
           )
         ],
