@@ -16,7 +16,8 @@ import 'step_builder.dart';
 import 'components/change_theme_color_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-bool isUserPro = false;
+//TODO: isUserPro should be changed to true and saved in firebase if user pays (non-consumable) one time payment
+bool isUserPro = true;
 bool onSettingsPage = false;
 
 class Settings extends StatefulWidget {
@@ -141,7 +142,7 @@ class _SettingsState extends State<Settings> {
                 padding: const EdgeInsets.all(18.0),
                 child: Switch(
                     activeColor: mainAccentColor,
-                    activeTrackColor: Colors.greenAccent,
+                    activeTrackColor: mainAccentColor,
                     value: wantsPopUp,
                     onChanged: (value) {
                       setState(() {
@@ -159,6 +160,7 @@ class _SettingsState extends State<Settings> {
             ],
           ),
           Divider(),
+          //TODO: WHEN user presses they should be directed to rate on IOS or android
           FlatButton(
             onPressed: () {},
             child: Row(
@@ -180,6 +182,7 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           Divider(),
+          //TODO: if isUserPro is false, and user taps then they should be directed to pay $1.99
           (isUserPro == false)
               ? FlatButton(
                   onPressed: () {},
@@ -188,7 +191,7 @@ class _SettingsState extends State<Settings> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        " Go Pro!",
+                        " Go Pro! (Unlimited dreams)",
                         style: TextStyle(fontSize: 18.0),
                       ),
                       Padding(
@@ -251,7 +254,7 @@ class _SettingsState extends State<Settings> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
+                    padding: EdgeInsets.fromLTRB(28.0, 18.0, 32.0, 18.0),
                     child: Icon(
                       Icons.edit,
                       size: 30.0,
@@ -288,7 +291,7 @@ class _SettingsState extends State<Settings> {
           ),
           Divider(),
           Padding(
-            padding: const EdgeInsets.only(top: 24.0),
+            padding: const EdgeInsets.all(8.0),
             child: Center(
               child: OvalButtonForLogIn(
                 onPressed: () {

@@ -290,7 +290,7 @@ class _StepMakerState extends State<StepMaker> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    color: Color(0xFF15C96C),
+                    color: mainAccentColor,
                   ),
                 ),
                 Padding(
@@ -477,7 +477,7 @@ class _StepMakerState extends State<StepMaker> {
                                         });
                                       },
                                       activeTrackColor: mainAccentColor,
-                                      activeColor: Colors.green[600],
+                                      activeColor: mainAccentColor,
                                     )
                                   : Text(
                                       "    Please select target Date first")),

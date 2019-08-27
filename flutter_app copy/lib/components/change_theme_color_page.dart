@@ -31,7 +31,7 @@ class ChangeColor extends StatelessWidget {
             ),
             ColorCategory(
               color: Color(0xFF35DDDC),
-              colorName: "Yellow",
+              colorName: "Turquoise",
               colorHex: "0xFF35DDDC",
             ),
             ColorCategory(
@@ -73,6 +73,7 @@ class ColorCategory extends StatelessWidget {
     return FlatButton(
       onPressed: () {
         mainAccentColor = this.color;
+        //TODO: SAVE user Color in firebase
         Firestore.instance
             .collection('users')
             .document(loggedInUserString)

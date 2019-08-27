@@ -384,13 +384,9 @@ class _HomePageState extends State<HomePage> {
       dreamCards.add(
         new GestureDetector(
           onTap: () {
-            print("dreamCardslength ${dreamCards.length}");
-            print(
-                "is this true ${(isUserPro == false && dreamCards.length != 3)}");
+            //TODO: IF user tries to add more then 2 dreams and they are not pro a pop up will come up telling them to go pro, when user clicks yes they should be prompted to pay the $1.99
             if (dreamCards.length == 3) {
-              print("wegotherefirst");
               if (isUserPro != true) {
-                print("wegothere");
                 showDialog(
                     context: context,
                     builder: (_) {
@@ -450,6 +446,7 @@ class _HomePageState extends State<HomePage> {
                   child: Icon(
                     Icons.add,
                     size: 70.0,
+                    //TODO: this plus button icon (home page) color is not changing even though its color is mainAccentColor which changes when the user chooses a new color
                     color: mainAccentColor,
                   ),
                 ),

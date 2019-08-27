@@ -18,7 +18,7 @@ import 'package:intl/intl.dart';
 import 'components/popup_item.dart';
 import 'completed_dreams.dart';
 import 'components/completed_dream.dart';
-import 'components/alert_dialog.dart';
+import 'components/tip_alert_dialog.dart';
 
 int uniqueFinishedNumber = 0;
 List<StepCard> steps;

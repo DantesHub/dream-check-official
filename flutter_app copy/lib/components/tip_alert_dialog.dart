@@ -88,7 +88,7 @@ class _MyDialogState extends State<MyDialog> {
             children: <Widget>[
               Switch(
                   activeColor: mainAccentColor,
-                  activeTrackColor: Colors.greenAccent,
+                  activeTrackColor: mainAccentColor,
                   value: wantsPopUp,
                   onChanged: (value) {
                     setState(() {
