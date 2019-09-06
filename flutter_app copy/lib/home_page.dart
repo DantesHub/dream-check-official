@@ -21,7 +21,7 @@ import 'components/completed_dream.dart';
 import 'components/user_isnt_pro_alert.dart';
 
 String pressedThemeColor;
-Color mainAccentColor = Color(0xFF15C96C);
+Color mainAccentColor = Color.fromRGBO(255,21,201,1.0);   //0xFF15C96C  (I used FF15C9 in mainAccentColor and its working)
 String mainAccentColorString;
 String fsTitleDelete;
 int counter = 1;
@@ -447,6 +447,7 @@ class _HomePageState extends State<HomePage> {
                     Icons.add,
                     size: 70.0,
                     //TODO: this plus button icon (home page) color is not changing even though its color is mainAccentColor which changes when the user chooses a new color
+                    //TODO: Done
                     color: mainAccentColor,
                   ),
                 ),
