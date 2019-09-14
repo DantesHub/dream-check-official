@@ -46,13 +46,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  launch_review:
-    dependency: "direct main"
-    description:
-      name: launch_review
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   matcher:
     dependency: transitive
     description:
@@ -151,4 +144,3 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.2.2 <3.0.0"
-  flutter: ">=0.1.4 <2.0.0"

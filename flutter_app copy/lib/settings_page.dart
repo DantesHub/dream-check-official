@@ -15,7 +15,6 @@ import 'completed_dreams.dart';
 import 'step_builder.dart';
 import 'components/change_theme_color_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:launch_review/launch_review.dart';
 
 //TODO: isUserPro should be changed to true and saved in firebase if user pays (non-consumable) one time payment
 bool isUserPro = true;
@@ -162,10 +161,8 @@ class _SettingsState extends State<Settings> {
           ),
           Divider(),
           //TODO: WHEN user presses they should be directed to rate on IOS or android
-          // TODO: Done
           FlatButton(
-            onPressed: () {LaunchReview.launch(androidAppId: "com.studyinghub.vision_check_test",
-                iOSAppId: "1476432116");},
+            onPressed: () {},
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +184,28 @@ class _SettingsState extends State<Settings> {
           Divider(),
           //TODO: if isUserPro is false, and user taps then they should be directed to pay $1.99
           (isUserPro == false)
-              ? Container(
+              ? FlatButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        " Go Pro! (Unlimited dreams)",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Icon(
+                          Icons.lock,
+                          size: 35.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -203,27 +221,6 @@ class _SettingsState extends State<Settings> {
                         padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
                         child: Icon(
                           Icons.mood,
-                          size: 35.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : FlatButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        " Go Pro! (Unlimited dreams)",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Icon(
-                          Icons.lock,
                           size: 35.0,
                           color: Colors.black,
                         ),
