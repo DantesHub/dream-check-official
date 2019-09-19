@@ -15,9 +15,10 @@ import 'completed_dreams.dart';
 import 'step_builder.dart';
 import 'components/change_theme_color_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:launch_review/launch_review.dart';
 
 //TODO: isUserPro should be changed to true and saved in firebase if user pays (non-consumable) one time payment
-bool isUserPro = true;
+bool isUserPro = false;
 bool onSettingsPage = false;
 
 class Settings extends StatefulWidget {
@@ -119,14 +120,14 @@ class _SettingsState extends State<Settings> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
+      body: ListView(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 14.0),
             child: Text(
               "Hold down dream to delete",
               style: TextStyle(color: Colors.grey, fontSize: 20.0),
+              textAlign: TextAlign.center,
             ),
           ),
           Divider(),
@@ -160,9 +161,12 @@ class _SettingsState extends State<Settings> {
             ],
           ),
           Divider(),
-          //TODO: WHEN user presses they should be directed to rate on IOS or android
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              LaunchReview.launch(
+                  androidAppId: "com.studyinghub.vision_check_test",
+                  iOSAppId: "1476432116");
+            },
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,29 +187,9 @@ class _SettingsState extends State<Settings> {
           ),
           Divider(),
           //TODO: if isUserPro is false, and user taps then they should be directed to pay $1.99
-          (isUserPro == false)
-              ? FlatButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        " Go Pro! (Unlimited dreams)",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Icon(
-                          Icons.lock,
-                          size: 35.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : Container(
+          //TODO: AND THEN change isUserPro = true
+          (isUserPro == true)
+              ? Container(
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -221,6 +205,27 @@ class _SettingsState extends State<Settings> {
                         padding: EdgeInsets.fromLTRB(8.0, 18.0, 32.0, 18.0),
                         child: Icon(
                           Icons.mood,
+                          size: 35.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : FlatButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        " Go Pro! (Unlimited dreams)",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Icon(
+                          Icons.lock,
                           size: 35.0,
                           color: Colors.black,
                         ),
@@ -250,11 +255,11 @@ class _SettingsState extends State<Settings> {
                     padding: const EdgeInsets.all(7.0),
                     child: Text(
                       "Change theme (PRO FEATURE)",
-                      style: TextStyle(fontSize: 18.0),
+                      style: TextStyle(fontSize: 17.0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(28.0, 18.0, 32.0, 18.0),
+                    padding: EdgeInsets.fromLTRB(18.0, 18.0, 20.0, 18.0),
                     child: Icon(
                       Icons.edit,
                       size: 30.0,

@@ -40,6 +40,8 @@ class _userNotProDialogState extends State<userNotProDialog> {
                   color: Colors.grey[200],
                   child: FlatButton(
                     onPressed: () {
+                      //TODO: if isUserPro is false, and user taps then they should be directed to pay $1.99
+                      //TODO: AND THEN change isUserPro = true
                       //Code to make user become pro
                     },
                     child: Text(

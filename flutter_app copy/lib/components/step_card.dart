@@ -69,11 +69,12 @@ class _StepCardState extends State<StepCard> {
   @override
   Widget build(BuildContext context) {
     //Constant for wrapping text
-    double c_width = (MediaQuery.of(context).size.width < 710.0)
-        ? ((MediaQuery.of(context).size.width < 600.0))
-            ? MediaQuery.of(context).size.width * 0.70
-            : MediaQuery.of(context).size.width * 0.75
-        : MediaQuery.of(context).size.width * 0.82;
+    double c_width = MediaQuery.of(context).size.width * 0.70;
+//    double c_width = (MediaQuery.of(context).size.width < 710.0)
+//        ? ((MediaQuery.of(context).size.width < 600.0))
+//            ? MediaQuery.of(context).size.width * 0.70
+//            : MediaQuery.of(context).size.width * 0.75
+//        : MediaQuery.of(context).size.width * 0.82;
 //    double c_width = MediaQuery.of(context).size.width * 0.70;
     return SafeArea(
       child: Row(
@@ -137,7 +138,7 @@ class _StepCardState extends State<StepCard> {
                             child: Container(
                               width: (MediaQuery.of(context).size.width > 400)
                                   ? c_width
-                                  : 269.0,
+                                  : 250.0,
                               child: Text(
                                 widget.stepName,
                                 softWrap: true,

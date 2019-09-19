@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Icon(
                       Icons.check,
                       size: 174.0,
-                      color: mainAccentColor,
+                      color: Color(0xFF15C96C),
                     ),
                   ),
                 ),
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
-                                        color: mainAccentColor,
+                                        color: Color(0xFF15C96C),
                                         onPressed: () {
                                           try {
                                             resetPassword(recoverEmail);
@@ -229,9 +229,6 @@ class _LoginPageState extends State<LoginPage> {
                     final user = await Auth()
                         .signInWithEmailAndPassword(email, password);
                     if (user != null) {
-                      _firestore.collection('users').document(email).setData({
-                        'user': email,
-                      });
                       _ensureLoggedIn();
                       Navigator.push(
                           context,
@@ -267,7 +264,7 @@ class _LoginPageState extends State<LoginPage> {
                     print("You effed up");
                   }
                 },
-                color: mainAccentColor,
+                color: Color(0xFF15C96C),
                 text: 'Log In',
               ),
               OvalButtonForLogIn(

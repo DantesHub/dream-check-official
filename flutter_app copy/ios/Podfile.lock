@@ -11,6 +11,8 @@ PODS:
     - Firebase/Database
     - Firebase/Firestore
     - Flutter
+  - Firebase/Analytics (6.6.0):
+    - Firebase/Core
   - Firebase/Auth (6.6.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.2.2)
@@ -29,6 +31,7 @@ PODS:
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 4.1.2)
   - firebase_analytics (0.0.1):
+    - Firebase/Analytics (~> 6.0)
     - Firebase/Core
     - Flutter
   - firebase_auth (0.0.1):
@@ -165,6 +168,8 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
   - GTMSessionFetcher/Core (1.2.2)
+  - launch_review (0.0.1):
+    - Flutter
   - leveldb-library (1.20)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -186,6 +191,7 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
+  - launch_review (from `.symlinks/plugins/launch_review/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
@@ -234,6 +240,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
+  launch_review:
+    :path: ".symlinks/plugins/launch_review/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -243,9 +251,9 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   cloud_firestore: cd6e849ecb8ab43e5a7a5f1f169304ca65436c03
   Firebase: a2b5951f30ff38fd3b3bdae9c7d340f940fd3c51
-  firebase_analytics: bd50d8f5d3f42dcab6da67944a849062470b0a19
-  firebase_auth: d0fb9362699f7d48453b561c8cf5f2c715fc6fe0
-  firebase_core: b3b02d0b5e9d01aab5e50ba7cbcf84c73cb6883c
+  firebase_analytics: 5afaaf8f43ae6a640f200d98f3ecff32e9873538
+  firebase_auth: 00d6e1ab6d890cd6d3c624df61702e3a7072d1e3
+  firebase_core: ae55ea92448ec8675d325da4db22cf3b4d58a54d
   firebase_messaging: b25b2fa94e685146bcf9d706ed87b4e95cd2a17d
   FirebaseAnalytics: 48414ae5cbf6976d8a2f7177e0466540e5ab33ce
   FirebaseAnalyticsInterop: 0f250d71e8741352407a8db351e6de78c5c56d35
@@ -258,7 +266,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: d65bd28e77a8cdc045be6353c6e1e146efdf92dc
   FirebaseInstanceID: 8b42755db950682e7de0d167bc6fb26a57b244af
   FirebaseMessaging: ddd74d13644ef24cc4e2d95cabd1cf408e99b7b0
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
   google_sign_in: 27e70a98b529f0b076d4b19f231b81da28b1750b
   GoogleAppMeasurement: 47285fa897e5a125df56b9ef8750a1d81e4598a8
@@ -270,6 +278,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  launch_review: 75d5a956ba8eaa493e9c9d4bf4c05e505e8d5ed0
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259

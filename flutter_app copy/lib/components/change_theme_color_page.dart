@@ -54,6 +54,11 @@ class ChangeColor extends StatelessWidget {
               colorName: "Orange",
               colorHex: "0xFFFF6600",
             ),
+            ColorCategory(
+              color: Color(0xFF15C96C),
+              colorName: "Default",
+              colorHex: "0xFF15c96c",
+            ),
           ],
         ),
       ),
@@ -63,7 +68,9 @@ class ChangeColor extends StatelessWidget {
 
 class ColorCategory extends StatelessWidget {
   ColorCategory(
-      {@required this.color, @required this.colorName, @required colorHex});
+      {@required this.color,
+      @required this.colorName,
+      @required this.colorHex});
   Color color;
   String colorName;
   String colorHex;
@@ -73,6 +80,8 @@ class ColorCategory extends StatelessWidget {
     return FlatButton(
       onPressed: () {
         mainAccentColor = this.color;
+        print(this.colorHex);
+
         //TODO: SAVE user Color in firebase
         Firestore.instance
             .collection('users')
@@ -80,8 +89,9 @@ class ColorCategory extends StatelessWidget {
             .setData({
           'user': loggedInUserString,
           "wantsPopUp": wantsPopUpTest,
-          'themeColor': this.color,
+          'themeColor': this.colorHex,
         });
+
         Navigator.pop(context);
       },
       child: Row(

@@ -76,7 +76,7 @@ class _WelcomePageState extends State<WelcomePage>
                     child: Icon(
                       Icons.check,
                       size: 54.0,
-                      color: mainAccentColor,
+                      color: Color(0xFF15C96C),
                     ),
                   ),
                 )
@@ -101,7 +101,7 @@ class _WelcomePageState extends State<WelcomePage>
                     MaterialPageRoute(builder: (context) => RegisterPage()));
               },
               text: 'Register',
-              color: mainAccentColor,
+              color: Color(0xFF15C96C),
             ),
           ],
         ),
