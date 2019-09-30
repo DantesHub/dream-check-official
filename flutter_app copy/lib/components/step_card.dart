@@ -100,12 +100,12 @@ class _StepCardState extends State<StepCard> {
               );
             },
             child: Container(
-              margin: EdgeInsets.all(5.0),
+              margin: EdgeInsets.all(0.0),
               height: 124.0,
               child: Card(
                 elevation: 3.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Row(
                     children: <Widget>[
                       Text(widget.stepNumber.toString(),

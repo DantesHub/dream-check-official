@@ -16,6 +16,8 @@ bool registerWasPressed = false;
 class RegisterPage extends StatefulWidget {
   static const String id = 'registration_page';
 
+  get auth => null;
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }

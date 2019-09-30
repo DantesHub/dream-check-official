@@ -235,7 +235,7 @@ class _RegisterPageState extends State<RegisterPage> {
       validator: (value) => value.isEmpty ? 'Email can\'t be empty' : (
         !EmailValidator.Validate(value, true) ? 'Not a valid email' : null
       ),
-      onChanged: (value) => email = value.trim(),
+      onSaved: (value) => email = value.trim(),
     );
   }
 
@@ -250,7 +250,7 @@ class _RegisterPageState extends State<RegisterPage> {
       validator: (value) => value.isEmpty ? 'Password can\'t be empty' : (
         value.length < 6 ? 'Password length must be greater than 6 characters' : null
       ),
-      onChanged: (value) => password = value.trim(),
+      onSaved: (value) => password = value.trim(),
     );
   }
 
@@ -267,7 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password != null && password.isNotEmpty && value != password ? 'Passwords do not match' : null
         )
       ),
-      onChanged: (value) => password2 = value.trim(),
+      onSaved: (value) => password2 = value.trim(),
     );
   }
 

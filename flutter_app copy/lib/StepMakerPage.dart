@@ -280,7 +280,7 @@ class _StepMakerState extends State<StepMaker> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Padding(
-          padding: const EdgeInsets.only(left: 50.0),
+          padding: const EdgeInsets.only(left: 30.0),
           child: SafeArea(
             child: Row(
               children: <Widget>[
@@ -289,7 +289,7 @@ class _StepMakerState extends State<StepMaker> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                    fontSize: 20,
                     color: mainAccentColor,
                   ),
                 ),
@@ -333,13 +333,13 @@ class _StepMakerState extends State<StepMaker> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 15.0, top: 30.0, bottom: 20.0),
+                            left: 0.0, top: 30.0, bottom: 20.0),
                         child: Text(
                           "What will you be doing for this step?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             //fontFamily: 'Chivo',
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -377,13 +377,13 @@ class _StepMakerState extends State<StepMaker> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 10.0, top: 5.0, bottom: 20.0),
+                            left: 0.0, top: 5.0, bottom: 20.0),
                         child: Text(
                           "What is your target date for this step?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             //fontFamily: 'Chivo',
-                            fontSize: 20.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -395,7 +395,7 @@ class _StepMakerState extends State<StepMaker> {
                       Expanded(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 40.0),
+                              const EdgeInsets.fromLTRB(0.0, 30.0, 30.0, 40.0),
                           child: Text(
                             widget.dateVariable,
                             style: TextStyle(fontSize: 20.0),
@@ -403,7 +403,7 @@ class _StepMakerState extends State<StepMaker> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 30.0),
+                        padding: const EdgeInsets.fromLTRB(10.0, 8.0, 8.0, 40.0),
                         child: MaterialButton(
                           elevation: 8.0,
                           height: 40.0,
@@ -413,7 +413,7 @@ class _StepMakerState extends State<StepMaker> {
                           onPressed: () => _showDateTimePicker(),
                           splashColor: Colors.greenAccent,
                           child: Padding(
-                            padding: const EdgeInsets.all(0.0),
+                            padding: const EdgeInsets.only(left:20.0),
                             child: Text(
                               "Target Date",
                               style: TextStyle(
@@ -436,13 +436,13 @@ class _StepMakerState extends State<StepMaker> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 20.0, top: 30.0, bottom: 20.0),
+                              left: 0.0, top: 30.0, bottom: 20.0),
                           child: Text(
                             "Do you want to be reminded of this?",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               //fontFamily: 'Chivo',
-                              fontSize: 20.0,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

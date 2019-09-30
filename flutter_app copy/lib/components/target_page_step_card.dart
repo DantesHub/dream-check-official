@@ -50,7 +50,7 @@ class _TargetCardState extends State<TargetCard> {
       child: Card(
         elevation: 3.0,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(0.0),
           child: Row(
             children: <Widget>[
               Padding(

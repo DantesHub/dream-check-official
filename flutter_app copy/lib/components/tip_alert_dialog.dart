@@ -35,7 +35,7 @@ class _MyDialogState extends State<MyDialog> {
               ),
               SizedBox(
                 width: 10.0,
-                height: 10.0,
+                height: 5.0,
               ),
               Text(
                   "Slide left to delete a \nstep card, this will not \nrenumber your list.\n")
@@ -49,7 +49,7 @@ class _MyDialogState extends State<MyDialog> {
               ),
               SizedBox(
                 width: 10.0,
-                height: 10.0,
+                height: 5.0,
               ),
               Text(
                   "Tap a card to edit it, \npress the green check \nto complete a step\n Does not renumber list\n")
@@ -63,7 +63,7 @@ class _MyDialogState extends State<MyDialog> {
               ),
               SizedBox(
                 width: 10.0,
-                height: 10.0,
+                height: 5.0,
               ),
               Text(
                   "Long press a card \nto rearrange \nand renumber your list\n")
@@ -77,7 +77,7 @@ class _MyDialogState extends State<MyDialog> {
               ),
               SizedBox(
                 width: 10.0,
-                height: 10.0,
+                height: 5.0,
               ),
               Text(
                   "Once you complete your \ndream (at least 3 steps)\n it will be added to\n your trophy case\n")
@@ -110,7 +110,7 @@ class _MyDialogState extends State<MyDialog> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 0.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,

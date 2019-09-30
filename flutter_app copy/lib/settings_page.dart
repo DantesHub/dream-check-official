@@ -137,7 +137,7 @@ class _SettingsState extends State<Settings> {
             children: <Widget>[
               Text(
                 "\t  Toggle off to stop Tip pop up",
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
+                style: TextStyle(fontSize: 15.0, color: Colors.black),
               ),
               Padding(
                 padding: const EdgeInsets.all(18.0),
@@ -252,10 +252,10 @@ class _SettingsState extends State<Settings> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(7.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Change theme (PRO FEATURE)",
-                      style: TextStyle(fontSize: 17.0),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                   ),
                   Padding(
@@ -280,7 +280,7 @@ class _SettingsState extends State<Settings> {
                   padding: const EdgeInsets.all(18.0),
                   child: Text(
                     " Contact us with any questions \n or bugs you find!\n @dreamchecklab@gmail.com",
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 15.0),
                   ),
                 ),
                 Padding(
